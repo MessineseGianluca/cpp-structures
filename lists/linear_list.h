@@ -1,10 +1,3 @@
-/*
- * linear_list.h
- *
- *  Created on: Oct 27, 2017
- *      Author: Gianluca
- */
-
 #ifndef LINEAR_LIST_H_
 #define LINEAR_LIST_H_
 
@@ -26,17 +19,15 @@ public:
 	virtual position previous(position) const = 0; // return the previous position
 	virtual void insert(const value_type &, position) = 0; // insert an element
 	virtual void erase(position pos) = 0; // erases the element at position pos
-
+    virtual int size() const = 0; //implementation here is not efficient(see derivated classes)
 	/***************************** SERVICE METHODS **************************************/
 
 	//friend ostream& operator << <T,P>(ostream&, const Linear_list<T,P>&);
-
-	int size() const;
 	void invert();
 	bool is_palindrome() const;
 };
 
-template< class T, class P > int LinearList<T, P>::size() const {
+/*template< class T, class P > int LinearList<T, P>::size() const {
     P i = begin();
     int counter = 0;
     while( !end(i) ) {
@@ -44,7 +35,7 @@ template< class T, class P > int LinearList<T, P>::size() const {
        	i = next(i);
     }
     return counter;
-}
+}*/
 
 template< class T, class P > void LinearList<T, P>::invert() {
 	if( !empty() ) {
@@ -98,16 +89,4 @@ template < class T, class P > bool LinearList<T, P>::is_palindrome() const {
     return pal;
 }
 
-// For dynamic lists, in order to avoid position conflict: "A next-position of a node in list A
-//could point to a node which belongs to a different list B.
-/*template <class T> class Position {
-public:
-	typedef T list_node;
-private:
-	list_node <T> *node; //points to the node of his own
-	list_node<T> *list; //point to the list(sentinella) of his own
-};*/
-
-
 #endif /* LINEAR_LIST_H_ */
-

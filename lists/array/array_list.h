@@ -1,11 +1,5 @@
-/*
- * vector_list.h
- *
- *  Created on: Nov 20, 2017
- *      Author: Gianluca
- */
-#ifndef ARRAY_ARRAY_LIST_LIST_H_
-#define ARRAY_ARRAY_LIST_LIST_H_
+#ifndef ARRAY_ARRAY_LIST_H_
+#define ARRAY_ARRAY_LIST_H_
 
 #include "../linear_list.h"
 
@@ -31,6 +25,9 @@ public:
 	value_type read(position) const;
 	void write(const value_type &, position);
 	position begin() const;
+    int size() const {
+        return length_;
+    }
 	bool end(position) const;
 	position next(position) const;
 	position previous(position) const;
@@ -191,4 +188,4 @@ template<class T> bool ArrayList<T>::operator == (const ArrayList<T> &vl) const 
 	return true;
 }
 
-#endif /* ARRAY_ARRAY_LIST_LIST_H_ */
+#endif /* ARRAY_ARRAY_LIST_H_ */

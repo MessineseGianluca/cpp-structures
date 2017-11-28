@@ -1,13 +1,6 @@
-//============================================================================
-// Name        : Lists.cpp
-// Author      : Gianluca Messinese
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
-//============================================================================
-
 #include <iostream>
 #include "array/array_list.h"
+#include "linked/linked_list.h"
 #define DIM 10
 
 int main() {
