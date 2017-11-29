@@ -5,11 +5,13 @@ template< class T > class LinkedList;
 
 template< class T > class Node {
 private:
-	T _value;
-	Node<T> *prev_node;
-	Node<T> *next_node;
+	T value_;
+	Node<T> *prev_node_;
+	Node<T> *next_node_;
+	Node<T> *list_; //points to the list(sentinel) of his own in order to avoid
+	               //conflicts
 };
-
+/*
 // In order to avoid position conflict: "A next-position of a node in list A
 // could point to a node which belongs to a different list B";
 template <typename T> class Position {
@@ -18,14 +20,13 @@ private:
 	Node<T> *node; //points to the node of his own
 	Node<T> *list; //points to the list(sentinel) of his own
 };
-
-template < class T > class LinkedList : public LinearList< T, Position<T> > {
+*/
+template < class T > class LinkedList : public LinearList< T, Node<T>* > {
 public:
-    typedef typename LinearList< T, Position<T> >::value_type value_type;
-    typedef typename LinearList< T, Position<T> >::position position;
+    typedef typename LinearList< T, Node<T>* >::value_type value_type;
+    typedef typename LinearList< T, Node<T>* >::position position;
 	// constructor
 	LinkedList();
-	LinkedList(int);
 	// copy constructor
 	LinkedList(const LinkedList<T>& );
 	//distructor
@@ -51,9 +52,38 @@ public:
 	bool operator == (const LinkedList<T> &) const; // tests two list for equality
 
  private:
-	Position<T> head_;
+	Node<T> head_;
 	int length_; // the length of the list
 };
 
+template < class T > LinkedList< T >::LinkedList() {
+	head_ = new Node<T>;
+    head_->next_node_ = head_;
+    head_->prev_node_ = head_;
+    length_ = 0;
+}
+
+template < class T > LinkedList < T >::LinkedList(const LinkedList<T> &list_to_copy) {
+    this->head_ = new Node<T>;
+    this->head->next_node_ = head_;
+    this->head->prev_node_ = head_;
+	this->head->list_ = head_;
+    if (!list_to_copy.empty()) {
+        position p = list_to_copy.last();
+	    while(p != begin()) {
+		    insert(list_to_copy.read(p), begin());
+		    p = list_to_copy.previous(p);
+	    }
+    }
+}
+
+template < class T > LinkedList < T >::~LinkedList() {
+	while(!empty()) erase(begin());
+	delete head_;
+}
+
+template< class T > void LinkedList< T >::create() {
+	if (empty()) length_ = 0;
+}
 
 #endif /* LINKED_LINKED_LIST_H_ */
