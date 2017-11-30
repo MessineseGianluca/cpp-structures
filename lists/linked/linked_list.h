@@ -4,12 +4,13 @@
 template< class T > class LinkedList;
 
 template< class T > class Node {
+	friend class LinkedList<T>;
 private:
 	T value_;
 	Node<T> *prev_node_;
 	Node<T> *next_node_;
 	Node<T> *list_; //points to the list(sentinel) of his own in order to avoid
-	               //conflicts
+	                //conflict
 };
 /*
 // In order to avoid position conflict: "A next-position of a node in list A
@@ -60,14 +61,15 @@ template < class T > LinkedList< T >::LinkedList() {
 	head_ = new Node<T>;
     head_->next_node_ = head_;
     head_->prev_node_ = head_;
+	head_->list = head_;
     length_ = 0;
 }
 
 template < class T > LinkedList < T >::LinkedList(const LinkedList<T> &list_to_copy) {
-    this->head_ = new Node<T>;
-    this->head->next_node_ = head_;
-    this->head->prev_node_ = head_;
-	this->head->list_ = head_;
+	head_ = new Node<T>;
+	head_->next_node_ = head_;
+	head_->prev_node_ = head_;
+	head_->list = head_;
     if (!list_to_copy.empty()) {
         position p = list_to_copy.last();
 	    while(p != begin()) {
@@ -82,8 +84,24 @@ template < class T > LinkedList < T >::~LinkedList() {
 	delete head_;
 }
 
-template< class T > void LinkedList< T >::create() {
+template < class T > void LinkedList< T >::create() {
 	if (empty()) length_ = 0;
 }
+
+template < class T > bool LinkedList< T >::empty() const {
+	if(this->head_->next_node_ == this->head_) return true;
+	else return false;
+}
+
+template < class T > position LinkedList< T >::begin() const {
+	return this->head_->next_node_;
+}
+
+template < T > position LinkedList< T >::last() const {
+	return this->head_->prev_node_;
+}
+
+
+
 
 #endif /* LINKED_LINKED_LIST_H_ */
