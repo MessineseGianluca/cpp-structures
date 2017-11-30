@@ -1,8 +1,9 @@
 #ifndef LINKED_LINKED_LIST_H_
 #define LINKED_LINKED_LIST_H_
 
-template< class T > class LinkedList;
+#include "../linear_list.h"
 
+template< class T > class LinkedList;
 template< class T > class Node {
 	friend class LinkedList<T>;
 private:
@@ -36,13 +37,13 @@ public:
 	// methods
 	void create();
 	bool empty() const;
-	value_type read(position) const;
-	void write(const value_type &, position);
 	position begin() const;
 	position last() const;
 	bool end(position) const;
 	position next(position) const;
 	position previous(position) const;
+	value_type read(position) const;
+	void write(const value_type &, position);
 	void insert(const value_type &, position);
 	void erase(position);
 	int size() const {
@@ -93,12 +94,25 @@ template < class T > bool LinkedList< T >::empty() const {
 	else return false;
 }
 
-template < class T > position LinkedList< T >::begin() const {
+template < class T > typename LinkedList< T >::position LinkedList< T >::begin() const {
 	return this->head_->next_node_;
 }
 
-template < T > position LinkedList< T >::last() const {
+template < class T > typename LinkedList< T >::position LinkedList< T >::last() const {
 	return this->head_->prev_node_;
+}
+
+template < class T > bool LinkedList< T >::end(position p) const {
+	return (p == this->head_);
+}
+
+template < class T > typename LinkedList< T >::position LinkedList< T >::next(position p) const {
+	return read(p)->next_node_;
+}
+
+template < class T > typename LinkedList< T >::position LinkedList< T >::previous(position p) const {
+	if( p != this->head_)
+	    return read(p)->prev_node_;
 }
 
 
