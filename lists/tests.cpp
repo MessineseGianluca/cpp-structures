@@ -4,7 +4,6 @@
 #define DIM 10
 
 int main() {
-
     ArrayList<int> my_list(DIM);
     for(int i = 0; i < DIM; i++) {
         my_list.insert(i, i + 1);
@@ -39,7 +38,18 @@ int main() {
     if(my_list2.is_palindrome())
     	std::cout << " is palindrome" << std::endl;
 
-    std::cin.get();
 
+    LinkedList<int> my_link_list;
+
+    my_link_list.insert(4, my_link_list.begin());
+    my_link_list.insert(5, my_link_list.begin());
+    my_link_list.insert(4, my_link_list.begin());
+
+    LinkedList<int> my_link_list2;
+    my_link_list2 = my_link_list;
+
+    std::cout << "my list is: " << my_link_list2;
+
+    my_link_list = my_link_list;
     return 0;
 }

@@ -50,11 +50,11 @@ public:
 		return length_;
 	};
 	// operators overloading
-	LinkedList<T>& operator = (const LinkedList<T>&); // the assignment operator
+	LinkedList<T> &operator = (const LinkedList<T> &); // the assignment operator
 	bool operator == (const LinkedList<T> &) const; // tests two list for equality
 
  private:
-	Node<T> head_;
+	Node<T> *head_;
 	int length_; // the length of the list
 };
 
@@ -62,7 +62,7 @@ template < class T > LinkedList< T >::LinkedList() {
 	head_ = new Node<T>;
     head_->next_node_ = head_;
     head_->prev_node_ = head_;
-	head_->list = head_;
+	head_->list_ = head_;
     length_ = 0;
 }
 
@@ -70,7 +70,7 @@ template < class T > LinkedList < T >::LinkedList(const LinkedList<T> &list_to_c
 	head_ = new Node<T>;
 	head_->next_node_ = head_;
 	head_->prev_node_ = head_;
-	head_->list = head_;
+	head_->list_ = head_;
     if (!list_to_copy.empty()) {
         position p = list_to_copy.last();
 	    while(p != begin()) {
@@ -107,14 +107,67 @@ template < class T > bool LinkedList< T >::end(position p) const {
 }
 
 template < class T > typename LinkedList< T >::position LinkedList< T >::next(position p) const {
-	return read(p)->next_node_;
+	return p->next_node_;
 }
 
 template < class T > typename LinkedList< T >::position LinkedList< T >::previous(position p) const {
-	if( p != this->head_)
-	    return read(p)->prev_node_;
+	if( p != this->head_) return p->prev_node_;
 }
 
+template < class T > typename LinkedList< T >::value_type LinkedList< T >::read(position p) const {
+	if (!end(p)) return(p->value_);
+}
+
+template < class T > void LinkedList< T >::write(const value_type &v, position p) {
+    if(!end(p)) p->value_ = v;
+}
+
+template < class T > void LinkedList< T >::insert(const value_type &v, position p) {
+    position new_node = new Node<T>;
+	new_node->value_ = v;
+	new_node->list_ = this->head_;
+    new_node->next_node_ = p;
+	new_node->prev_node_ = p->prev_node_;
+    p->prev_node_->next_node_ = new_node;
+	p->prev_node_ = new_node;
+	this->length_++;
+}
+
+template < class T > void LinkedList< T >::erase(position p) {
+    if( !empty() && !end(p) ) {
+		p->prev_node_->next_node_ = p->next_node_;
+	    p->next_node_->prev_node_ = p->prev_node_;
+        this->length_--;
+		delete p;
+	}
+}
+
+template< class T > LinkedList<T> &LinkedList<T>::operator = (const LinkedList<T> &vl) {
+    position new_node = this->head_->next_node_;
+	position node_to_copy = vl.begin();
+	if(&vl != this) {
+		for(int i = 0; i < this->size(); i++) {
+			std::cout << "entered";
+			new_node->value_ = node_to_copy->value_;
+            new_node->list_ = this->head_;
+			new_node = next(new_node);
+			node_to_copy = vl.next(node_to_copy);
+		}
+
+		if(this->size() >= vl.size()) {
+			while( !end(new_node) ) {
+				new_node = next(new_node);
+				erase(new_node->prev_node_);
+			}
+		} else {
+			while( !vl.end(node_to_copy) ) {
+				insert( node_to_copy->value_, new_node);
+				node_to_copy = vl.next(node_to_copy);
+			}
+ 		}
+	} 
+	return *this;
+}
 
 
 

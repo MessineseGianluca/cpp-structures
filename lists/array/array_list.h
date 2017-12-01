@@ -35,7 +35,7 @@ public:
 	void erase(position);
 
 	// operators overload
-	ArrayList<T>& operator = (const ArrayList<T>&); // the assignment operator
+	ArrayList<T> &operator = (const ArrayList<T>&); // the assignment operator
 	bool operator == (const ArrayList<T>&) const; // tests two list for equality
 
 private:
