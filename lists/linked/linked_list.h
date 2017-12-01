@@ -10,8 +10,8 @@ private:
 	T value_;
 	Node<T> *prev_node_;
 	Node<T> *next_node_;
-	Node<T> *list_; //points to the list(sentinel) of his own in order to avoid
-	                //conflict
+	Node<T> *list_; // points to the list(sentinel) of his own in order to avoid
+	                // conflict
 };
 /*
 // In order to avoid position conflict: "A next-position of a node in list A
@@ -111,7 +111,7 @@ template < class T > typename LinkedList< T >::position LinkedList< T >::next(po
 }
 
 template < class T > typename LinkedList< T >::position LinkedList< T >::previous(position p) const {
-	if( p != this->head_) return p->prev_node_;
+	if( p != this->head_ ) return p->prev_node_;
 }
 
 template < class T > typename LinkedList< T >::value_type LinkedList< T >::read(position p) const {
@@ -147,7 +147,6 @@ template< class T > LinkedList<T> &LinkedList<T>::operator = (const LinkedList<T
 	position node_to_copy = vl.begin();
 	if(&vl != this) {
 		for(int i = 0; i < this->size(); i++) {
-			std::cout << "entered";
 			new_node->value_ = node_to_copy->value_;
             new_node->list_ = this->head_;
 			new_node = next(new_node);
@@ -165,10 +164,24 @@ template< class T > LinkedList<T> &LinkedList<T>::operator = (const LinkedList<T
 				node_to_copy = vl.next(node_to_copy);
 			}
  		}
-	} 
+	}
 	return *this;
 }
 
-
+template< class T > bool LinkedList<T>::operator == (const LinkedList<T> &vl) const {
+    bool equal = true;
+	position list_pos = this->begin();
+	position vl_pos = vl.begin();
+    int i = 0;
+	if(this->size() == vl.size()) {
+		while( i < this->size() && equal ) {
+            if(read(list_pos) != vl.read(vl_pos)) equal = false;
+			list_pos = next(list_pos);
+			vl_pos = vl.next(vl_pos);
+			i++;
+		}
+	} else equal = false;
+    return equal;
+}
 
 #endif /* LINKED_LINKED_LIST_H_ */

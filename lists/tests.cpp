@@ -50,6 +50,6 @@ int main() {
 
     std::cout << "my list is: " << my_link_list2;
 
-    my_link_list = my_link_list;
+    if(my_link_list == my_link_list2) std::cout << "they are equal" << std::endl;
     return 0;
 }
