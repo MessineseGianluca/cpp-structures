@@ -13,16 +13,7 @@ private:
 	Node<T> *list_; // points to the list(sentinel) of his own in order to avoid
 	                // conflict
 };
-/*
-// In order to avoid position conflict: "A next-position of a node in list A
-// could point to a node which belongs to a different list B";
-template <typename T> class Position {
-friend class LinkedList<T>;
-private:
-	Node<T> *node; //points to the node of his own
-	Node<T> *list; //points to the list(sentinel) of his own
-};
-*/
+
 template < class T > class LinkedList : public LinearList< T, Node<T>* > {
 public:
     typedef typename LinearList< T, Node<T>* >::value_type value_type;
@@ -66,7 +57,8 @@ template < class T > LinkedList< T >::LinkedList() {
     length_ = 0;
 }
 
-template < class T > LinkedList < T >::LinkedList(const LinkedList<T> &list_to_copy) {
+template < class T >
+LinkedList < T >::LinkedList(const LinkedList<T> &list_to_copy) {
 	head_ = new Node<T>;
 	head_->next_node_ = head_;
 	head_->prev_node_ = head_;
@@ -94,11 +86,13 @@ template < class T > bool LinkedList< T >::empty() const {
 	else return false;
 }
 
-template < class T > typename LinkedList< T >::position LinkedList< T >::begin() const {
+template < class T >
+typename LinkedList< T >::position LinkedList< T >::begin() const {
 	return this->head_->next_node_;
 }
 
-template < class T > typename LinkedList< T >::position LinkedList< T >::last() const {
+template < class T >
+typename LinkedList< T >::position LinkedList< T >::last() const {
 	return this->head_->prev_node_;
 }
 
@@ -106,23 +100,28 @@ template < class T > bool LinkedList< T >::end(position p) const {
 	return (p == this->head_);
 }
 
-template < class T > typename LinkedList< T >::position LinkedList< T >::next(position p) const {
+template < class T >
+typename LinkedList< T >::position LinkedList< T >::next(position p) const {
 	return p->next_node_;
 }
 
-template < class T > typename LinkedList< T >::position LinkedList< T >::previous(position p) const {
+template < class T >
+typename LinkedList< T >::position LinkedList< T >::previous(position p) const {
 	if( p != this->head_ ) return p->prev_node_;
 }
 
-template < class T > typename LinkedList< T >::value_type LinkedList< T >::read(position p) const {
+template < class T >
+typename LinkedList< T >::value_type LinkedList< T >::read(position p) const {
 	if (!end(p)) return(p->value_);
 }
 
-template < class T > void LinkedList< T >::write(const value_type &v, position p) {
+template < class T >
+void LinkedList< T >::write(const value_type &v, position p) {
     if(!end(p)) p->value_ = v;
 }
 
-template < class T > void LinkedList< T >::insert(const value_type &v, position p) {
+template < class T >
+void LinkedList< T >::insert(const value_type &v, position p) {
     position new_node = new Node<T>;
 	new_node->value_ = v;
 	new_node->list_ = this->head_;
@@ -142,7 +141,8 @@ template < class T > void LinkedList< T >::erase(position p) {
 	}
 }
 
-template< class T > LinkedList<T> &LinkedList<T>::operator = (const LinkedList<T> &vl) {
+template< class T >
+LinkedList<T> &LinkedList<T>::operator = (const LinkedList<T> &vl) {
     position new_node = this->head_->next_node_;
 	position node_to_copy = vl.begin();
 	if(&vl != this) {
@@ -168,7 +168,8 @@ template< class T > LinkedList<T> &LinkedList<T>::operator = (const LinkedList<T
 	return *this;
 }
 
-template< class T > bool LinkedList<T>::operator == (const LinkedList<T> &vl) const {
+template< class T >
+bool LinkedList<T>::operator == (const LinkedList<T> &vl) const {
     bool equal = true;
 	position list_pos = this->begin();
 	position vl_pos = vl.begin();

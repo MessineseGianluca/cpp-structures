@@ -22,8 +22,7 @@ public:
     virtual int size() const = 0; //implementation here is not efficient(see derivated classes)
 	/***************************** SERVICE METHODS **************************************/
 
-	//friend std::ostream& operator << <T,P>(std::ostream&, const LinearList<T,P>&);
-	void invert();
+    void invert();
 	bool is_palindrome() const;
 };
 
@@ -79,7 +78,8 @@ template < class T, class P > bool LinearList<T, P>::is_palindrome() const {
     return pal;
 }
 
-template < class T, class P > std::ostream &operator << (std::ostream &os, const LinearList< T, P > &l) {
+template <class T, class P>
+std::ostream & operator << (std::ostream & os, const LinearList<T,P> & l) {
 	typename LinearList< T, P >::position p;
 	p = l.begin();
 	os << "[";

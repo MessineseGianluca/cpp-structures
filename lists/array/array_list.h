@@ -58,7 +58,8 @@ template< class T > ArrayList< T >::ArrayList(int dim){
 }
 
 
-template< class T>ArrayList< T >::ArrayList(const value_type a[], int dimension) {
+template< class T >
+ArrayList< T >::ArrayList(const value_type a[], int dimension) {
     array_dimension_ = dimension;
     this->create();
     for(int i = 1; i <= dimension; i++) {
@@ -94,18 +95,21 @@ template< class T > bool ArrayList< T >::empty() const {
     return(length_ == 0);
 }
 
-template< class T > typename ArrayList< T >::position ArrayList< T >::begin() const {
+template< class T >
+typename ArrayList< T >::position ArrayList< T >::begin() const {
 	return 1;
 }
 
-template< class T > typename ArrayList< T >::position ArrayList< T >::next(position p) const {
+template< class T >
+typename ArrayList< T >::position ArrayList< T >::next(position p) const {
 	if ((0 < p) && (p < length_ + 1)) // precondiction
 		return(p + 1);
 	else
 		return p;
 }
 
-template< class T > typename ArrayList< T >::position ArrayList< T >::previous(position p) const {
+template< class T >
+typename ArrayList< T >::position ArrayList< T >::previous(position p) const {
 	if ( (1 < p) && (p < length_ + 1)) // precondiction
 		return(p - 1);
 	else
@@ -119,17 +123,20 @@ template< class T > bool ArrayList< T >::end(position p) const {
 		return false;
 }
 
-template< class T > typename ArrayList< T >::value_type ArrayList< T >::read(position p) const {
+template< class T >
+typename ArrayList< T >::value_type ArrayList< T >::read(position p) const {
 	if ( (0 < p) && (p < length_ + 1)) // precondiction
 		return( elements_[p - 1] );
 }
 
-template< class T > void ArrayList< T >::write(const value_type &a, position p) {
+template< class T >
+void ArrayList< T >::write(const value_type &a, position p) {
   if ( (0 < p) && (p < length_ + 1)) // precondiction
       elements_[p - 1] = a;
 }
 
-template< class T > void ArrayList< T >::insert(const value_type &a, position p) {
+template< class T >
+void ArrayList< T >::insert(const value_type &a, position p) {
     if (length_ == array_dimension_) {
         change_dimension_(elements_, array_dimension_, array_dimension_ * 2);
         array_dimension_ = array_dimension_ * 2;
@@ -152,7 +159,8 @@ template< class T > void ArrayList< T >::erase(position p) {
 	}
 }
 
-template<class T> void ArrayList< T >::change_dimension_(T*& a, int old_dimension_, int new_dimension_){
+template< class T > void ArrayList< T >
+::change_dimension_(T*& a, int old_dimension_, int new_dimension_) {
 	T* temp = new T[new_dimension_];
 	int number;
 	if (old_dimension_ < new_dimension_)
@@ -166,7 +174,8 @@ template<class T> void ArrayList< T >::change_dimension_(T*& a, int old_dimensio
 }
 
 /* assignment operator */
-template<class T> ArrayList<T> &ArrayList<T>::operator = (const ArrayList<T> &vl) {
+template< class T >
+ArrayList<T> &ArrayList<T>::operator = (const ArrayList<T> &vl) {
 	if (!(this == &vl)) {   // pay attention to auto-assignments: l = l
 		this->array_dimension_ = vl.array_dimension_;
 		this->length_ = vl.length_;
@@ -179,7 +188,8 @@ template<class T> ArrayList<T> &ArrayList<T>::operator = (const ArrayList<T> &vl
 }
 
 /* equality operator */
-template<class T> bool ArrayList<T>::operator == (const ArrayList<T> &vl) const {
+template< class T >
+bool ArrayList<T>::operator == (const ArrayList<T> &vl) const {
 	if (vl.length_ != this->length_)
 		return false;
 	for (int i = 0; i < this->array_dimension_; i++)
