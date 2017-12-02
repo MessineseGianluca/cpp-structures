@@ -22,7 +22,9 @@ public:
 	LinkedList();
 	// copy constructor
 	LinkedList(const LinkedList<T>& );
-	//distructor
+    // array constructor
+    LinkedList(const value_type [], int);
+    //distructor
 	~LinkedList();
 
 	// methods
@@ -69,6 +71,18 @@ LinkedList < T >::LinkedList(const LinkedList<T> &list_to_copy) {
 		    insert(list_to_copy.read(p), begin());
 		    p = list_to_copy.previous(p);
 	    }
+    }
+}
+
+template< class T >
+LinkedList< T >::LinkedList(const value_type a[], int dimension) {
+    head_ = new Node<T>;
+    head_->next_node_ = head_;
+    head_->prev_node_ = head_;
+    head_->list_ = head_;
+    length_ = 0;
+    for(int i = dimension - 1; i >= 0; i--) {
+        this->insert(a[i], this->begin());
     }
 }
 

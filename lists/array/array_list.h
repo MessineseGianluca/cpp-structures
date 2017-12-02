@@ -11,10 +11,11 @@ public:
 	// constructor
 	ArrayList();
 	ArrayList(int);
-	// copy builder
+	// copy constructor
 	ArrayList(const ArrayList<T>&);
 
-	ArrayList(const value_type a[], int);
+    // array constructor
+	ArrayList(const value_type [], int);
 
 	// destructor
 	~ArrayList();

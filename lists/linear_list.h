@@ -87,12 +87,11 @@ std::ostream & operator << (std::ostream & os, const LinearList<T,P> & l) {
 		if ( p != l.begin()) {
 			os << ", " << l.read(p);
 		} else {
-			os <<l.read(p);
+			os << l.read(p);
 		}
 		p = l.next(p);
 	}
 	os << "]";
-	std::cout << std::endl;
 	return os;
 }
 
