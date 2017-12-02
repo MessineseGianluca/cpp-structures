@@ -62,5 +62,12 @@ int main() {
     LinkedList<char> my_link_list3(b, 11);
     std::cout << "my new list is: " << my_link_list3 << std::endl;
 
+    // exception tests
+    LinkedList<char> my_link_list4;
+    my_link_list4.insert('a', my_link_list3.begin()); //invalid pos exception
+    my_link_list4.insert('b', my_link_list4.begin());
+    my_link_list4.erase(my_link_list3.begin()); //invalid pos exception
+
+    std::cout << "my new list is: " << my_link_list4 << std::endl;
     return 0;
 }

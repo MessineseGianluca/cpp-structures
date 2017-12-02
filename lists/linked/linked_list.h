@@ -2,8 +2,16 @@
 #define LINKED_LINKED_LIST_H_
 
 #include "../linear_list.h"
+#include <exception>
 
 template< class T > class LinkedList;
+
+class InvalidPosException: public std::exception {
+    virtual const char* what() const throw() {
+        return "This position doesn't belong to the list.";
+    }
+} inv_pos_ex;
+
 template< class T > class Node {
 	friend class LinkedList<T>;
 private:
@@ -12,6 +20,16 @@ private:
 	Node<T> *next_node_;
 	Node<T> *list_; // points to the list(sentinel) of his own in order to avoid
 	                // conflict
+public:
+    /*
+     * This method checks if a Node< T > belongs to a struct (list, stack, etc.)
+     * This is useful for those methods of a struct that use positions to
+     * access to the elements(nodes) of the struct: you have to check if a
+     * position actually refers to a element of the struct or not.
+     */
+    bool belongs(const Node< T > *sentinel) const {
+        return this->list_ == sentinel;
+    }
 };
 
 template < class T > class LinkedList : public LinearList< T, Node<T>* > {
@@ -24,10 +42,10 @@ public:
 	LinkedList(const LinkedList<T>& );
     // array constructor
     LinkedList(const value_type [], int);
-    //distructor
+    // destructor
 	~LinkedList();
 
-	// methods
+	// operators
 	void create();
 	bool empty() const;
 	position begin() const;
@@ -42,7 +60,8 @@ public:
 	int size() const {
 		return length_;
 	};
-	// operators overloading
+
+	// operator's overloading
 	LinkedList<T> &operator = (const LinkedList<T> &); // the assignment operator
 	bool operator == (const LinkedList<T> &) const; // tests two list for equality
 
@@ -111,48 +130,83 @@ typename LinkedList< T >::position LinkedList< T >::last() const {
 }
 
 template < class T > bool LinkedList< T >::end(position p) const {
-	return (p == this->head_);
+    try {
+        if(!p->belongs(this->head_)) throw inv_pos_ex;
+        return p == this->head_;
+    } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
 }
 
 template < class T >
 typename LinkedList< T >::position LinkedList< T >::next(position p) const {
-	return p->next_node_;
+    try {
+        if(!p->belongs(this->head_)) throw inv_pos_ex;
+        return p->next_node_;
+    } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
 }
 
 template < class T >
 typename LinkedList< T >::position LinkedList< T >::previous(position p) const {
-	if( p != this->head_ ) return p->prev_node_;
+    try {
+        if(!p->belongs(this->head_)) throw inv_pos_ex;
+        if( p != this->head_ ) return p->prev_node_;
+    } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
 }
 
 template < class T >
 typename LinkedList< T >::value_type LinkedList< T >::read(position p) const {
-	if (!end(p)) return(p->value_);
+    try {
+        if(!p->belongs(this->head_)) throw inv_pos_ex;
+        if (!end(p)) return(p->value_);
+    } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
 }
 
 template < class T >
 void LinkedList< T >::write(const value_type &v, position p) {
-    if(!end(p)) p->value_ = v;
+    try {
+        if(!p->belongs(this->head_)) throw inv_pos_ex;
+        if(!end(p)) p->value_ = v;
+    } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
 }
 
 template < class T >
 void LinkedList< T >::insert(const value_type &v, position p) {
-    position new_node = new Node<T>;
-	new_node->value_ = v;
-	new_node->list_ = this->head_;
-    new_node->next_node_ = p;
-	new_node->prev_node_ = p->prev_node_;
-    p->prev_node_->next_node_ = new_node;
-	p->prev_node_ = new_node;
-	this->length_++;
+    try {
+        if(!p->belongs(this->head_)) throw inv_pos_ex;
+        position new_node = new Node<T>;
+        new_node->value_ = v;
+        new_node->list_ = this->head_;
+        new_node->next_node_ = p;
+        new_node->prev_node_ = p->prev_node_;
+        p->prev_node_->next_node_ = new_node;
+        p->prev_node_ = new_node;
+        this->length_++;
+    } catch(std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
 }
 
 template < class T > void LinkedList< T >::erase(position p) {
-    if( !empty() && !end(p) ) {
-		p->prev_node_->next_node_ = p->next_node_;
-	    p->next_node_->prev_node_ = p->prev_node_;
-        this->length_--;
-		delete p;
-	}
+    try {
+        if(!p->belongs(this->head_)) throw inv_pos_ex;
+        if( !empty() && !end(p) ) {
+            p->prev_node_->next_node_ = p->next_node_;
+            p->next_node_->prev_node_ = p->prev_node_;
+            this->length_--;
+            delete p;
+        }
+    } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
 }
 
 template< class T >

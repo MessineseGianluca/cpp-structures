@@ -35,7 +35,7 @@ public:
 	void insert(const value_type &, position);
 	void erase(position);
 
-	// operators overload
+	// operator's overloading
 	ArrayList<T> &operator = (const ArrayList<T>&); // the assignment operator
 	bool operator == (const ArrayList<T>&) const; // tests two list for equality
 
