@@ -39,7 +39,7 @@ public:
 	// constructor
 	LinkedList();
 	// copy constructor
-	LinkedList(const LinkedList<T>& );
+	LinkedList(const LinkedList<T> &);
     // array constructor
     LinkedList(const value_type [], int);
     // destructor
@@ -63,7 +63,7 @@ public:
 
 	// operator's overloading
 	LinkedList<T> &operator = (const LinkedList<T> &); // the assignment operator
-	bool operator == (const LinkedList<T> &) const; // tests two list for equality
+    bool operator == (const LinkedList<T> &) const; // tests two list for equality
 
  private:
 	Node<T> *head_;
