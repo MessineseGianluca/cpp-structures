@@ -40,7 +40,7 @@ public:
 	bool operator == (const ArrayList<T>&) const; // tests two list for equality
 
 private:
-	void change_dimension_(T*& , int , int ); //array doubling
+	void change_dimension_(value_type*& , int , int );
 	value_type* elements_;
 	int length_; // the length of the list
 	int array_dimension_; // array's dimension
@@ -48,12 +48,12 @@ private:
 
 /******************************* CONSTRUCTORS *****************************/
 template < class T > ArrayList< T >::ArrayList() {
-	array_dimension_ = 10;
+	array_dimension_ = 10; // standard dimension of the list
     this->create();
 
 }
 
-template< class T > ArrayList< T >::ArrayList(int dim){
+template< class T > ArrayList< T >::ArrayList(int dim) {
 	array_dimension_ = dim;
 	this->create();
 }

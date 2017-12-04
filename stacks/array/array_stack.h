@@ -6,14 +6,13 @@
 
 class NoElementsException: public std::exception {
     virtual const char* what() const throw() {
-        return "No elements in the stack.";
+        return "No elements in the stack!";
     }
 } no_el_ex;
 
-
 class MaxDimensionReachedException: public std::exception {
     virtual const char* what() const throw() {
-        return "Max dimension of the stack has been reached.";
+        return "Max dimension of the stack has been reached!";
     }
 } max_dim_ex;
 
@@ -22,7 +21,9 @@ public:
     typedef T value_type;
     Stack();
     Stack(int);
-    ~Stack();
+    // array constructor
+    Stack(const value_type [], int);
+    ~Stack(); //destructor
     void createStack();
     bool emptyStack() const;
     value_type readStack() const;
@@ -42,6 +43,16 @@ template <class T> Stack<T>::Stack() {
 template <class T> Stack<T>::Stack(int dimension) {
     stack_dimension_ = dimension;
     createStack();
+}
+
+template <class T> Stack<T>::Stack(const value_type a[], int dimension) {
+    stack_dimension_ = dimension;
+    createStack();
+    int i = 0;
+    while(i < dimension) {
+        push(a[i]);
+        i++;
+    }
 }
 
 template <class T> Stack<T>::~Stack() {

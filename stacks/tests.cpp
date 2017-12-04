@@ -29,5 +29,8 @@ int main() {
     my_stack.pop();
     my_stack.pop();
 
+    Stack<char> my_stack2("ciao", 4);
+    std::cout << my_stack2.readStack() << std::endl;
+
     return 0;
 }
