@@ -67,7 +67,13 @@ int main() {
     my_link_list4.insert('a', my_link_list3.begin()); //invalid pos exception
     my_link_list4.insert('b', my_link_list4.begin());
     my_link_list4.erase(my_link_list3.begin()); //invalid pos exception
-
     std::cout << "my new list is: " << my_link_list4 << std::endl;
+
+    /*//Lists of Lists
+    LinkedList< LinkedList<char> > my_link_list5;
+    LinkedList<char> temp("ciao", 4);
+    my_link_list5.insert(temp, my_link_list5.begin());
+    std::cout << *(my_link_list5.begin()) << std::endl;
+    */
     return 0;
 }

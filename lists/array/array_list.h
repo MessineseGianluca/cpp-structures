@@ -40,7 +40,7 @@ public:
 	bool operator == (const ArrayList<T>&) const; // tests two list for equality
 
 private:
-	void change_dimension_(value_type*& , int , int );
+	void change_dimension_(T *&, int, int);
 	value_type* elements_;
 	int length_; // the length of the list
 	int array_dimension_; // array's dimension

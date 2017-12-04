@@ -79,7 +79,7 @@ template < class T, class P > bool LinearList<T, P>::is_palindrome() const {
 }
 
 template <class T, class P>
-std::ostream & operator << (std::ostream & os, const LinearList<T,P> & l) {
+std::ostream & operator << (std::ostream &os, const LinearList<T,P> &l) {
 	typename LinearList< T, P >::position p;
 	p = l.begin();
 	os << "[";
