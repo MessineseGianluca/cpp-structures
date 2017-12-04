@@ -2,6 +2,20 @@
 #define ARRAY_STACK_H
 
 #include <iostream>
+#include <exception>
+
+class NoElementsException: public std::exception {
+    virtual const char* what() const throw() {
+        return "No elements in the stack.";
+    }
+} no_el_ex;
+
+
+class MaxDimensionReachedException: public std::exception {
+    virtual const char* what() const throw() {
+        return "Max dimension of the stack has been reached.";
+    }
+} max_dim_ex;
 
 template <class T> class Stack {
 public:
@@ -48,21 +62,24 @@ template <class T> typename Stack<T>::value_type Stack<T>::readStack() const {
 }
 
 template <class T> void Stack<T>::pop() {
-    if (!emptyStack()) {
-        head_ -= 1;
-    } else {
-        // EXCEPTION HERE
-        std::cout << "No elements in the stack." << std::endl;
+    try {
+        if(emptyStack()) throw no_el_ex;
+        // in case of no exception
+        head_ -= 1; // no need to delete[] the element from the stack, because
+                    // it will be overwritten
+    } catch(std::exception &e) {
+        std::cout << e.what() << std::endl;
     }
 }
 
 template <class T> void Stack<T>::push(value_type element) {
-    if (head_ == stack_dimension_) {
-        // Exception here
-        std::cout << "Max dimension of the stack reached." << std::endl;
-    } else {
+    try {
+        if(head_ == stack_dimension_) throw max_dim_ex;
+        // in case of no exception
         elements_[head_] = element;
         head_++;
+    } catch(std::exception &e) {
+        std::cout << e.what() << std::endl;
     }
 }
 

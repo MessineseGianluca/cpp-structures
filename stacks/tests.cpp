@@ -15,6 +15,19 @@ int main() {
     std::cout << "pop()" << std::endl;
     my_stack.pop();
     std::cout << my_stack.readStack() << std::endl;
-    
+
+    my_stack.push(6);
+    my_stack.push(6);
+    my_stack.push(6);
+    my_stack.push(6);
+    my_stack.push(6);
+
+    my_stack.pop();
+    my_stack.pop();
+    my_stack.pop();
+    my_stack.pop();
+    my_stack.pop();
+    my_stack.pop();
+
     return 0;
 }
