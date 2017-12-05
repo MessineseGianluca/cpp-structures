@@ -3,6 +3,7 @@
 
 #include "../linear_list.h"
 #include <exception>
+//#include <iterator>
 
 template< class T > class LinkedList;
 
@@ -20,6 +21,7 @@ private:
 	Node<T> *next_node_;
 	Node<T> *list_; // points to the list(sentinel) of his own in order to avoid
 	                // conflict
+    //T *node_;
 public:
     /*
      * This method checks if a Node< T > belongs to a struct (list, stack, etc.)
@@ -27,6 +29,7 @@ public:
      * access to the elements(nodes) of the struct: you have to check if a
      * position actually refers to a element of the struct or not.
      */
+
     bool belongs(const Node< T > *sentinel) const {
         return this->list_ == sentinel;
     }
@@ -54,17 +57,16 @@ public:
 	position next(position) const;
 	position previous(position) const;
 	value_type read(position) const;
+    value_type* readA(position) const;
 	void write(const value_type &, position);
 	void insert(const value_type &, position);
 	void erase(position);
 	int size() const {
 		return length_;
 	};
-
 	// operator's overloading
 	LinkedList<T> &operator = (const LinkedList<T> &); // the assignment operator
     bool operator == (const LinkedList<T> &) const; // tests two list for equality
-
  private:
 	Node<T> *head_;
 	int length_; // the length of the list

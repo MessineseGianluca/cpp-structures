@@ -94,5 +94,4 @@ std::ostream & operator << (std::ostream &os, const LinearList<T,P> &l) {
 	os << "]";
 	return os;
 }
-
 #endif /* LINEAR_LIST_H_ */
