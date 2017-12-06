@@ -47,9 +47,8 @@ int main() {
     std::cout << link_stack.read() << std::endl;
     link_stack.pop();
     std::cout << link_stack.read() << std::endl;
-
-    LinkedStack< LinkedStack<char> > stack_of_stacks;
     /*
+    LinkedStack< LinkedStack<char> > stack_of_stacks;
     stack_of_stacks.push(link_stack);
     link_stack.push('d');
     stack_of_stacks.push(link_stack);

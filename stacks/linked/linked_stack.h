@@ -50,27 +50,27 @@ template < class T > bool LinkedStack< T >::empty() const {
 
 template < class T >
 typename LinkedStack< T >::value_type LinkedStack< T >::read() const {
-    if(!empty()) return head_->value_;
+    if(!empty()) return head_->prev_node_->value_;
 }
 
 template < class T >
 void LinkedStack< T >::edit(const typename LinkedStack< T >::value_type &val) {
-    head_->value_ = val;
+    head_->prev_node_->value_ = val;
 }
 
 template < class T >
 void LinkedStack< T >::push(const typename LinkedStack< T >::value_type &val) {
     Node< T > *new_node = new Node< T >;
     new_node->value_ = val;
-    new_node->prev_node_ = head_;
-    head_ = new_node;
+    new_node->prev_node_ = head_->prev_node_;
+    head_->prev_node_ = new_node;
     length_++;
 }
 
 template < class T > void LinkedStack< T >::pop() {
     Node< T > *temp_node = new Node< T >;
-    temp_node = head_;
-    head_ = head_->prev_node_;
+    temp_node = head_->prev_node_;
+    head_->prev_node_ = head_->prev_node_->prev_node_;
     delete temp_node;
     length_--;
 }
