@@ -22,7 +22,7 @@ public:
     void pop();
     value_type read() const; // read node on the top_
     void edit(const value_type &); // edit node on the top
-
+    //T headNode() { return this->head_->value_; }
 private:
     int length_;
     Node < T > *head_;

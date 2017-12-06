@@ -39,7 +39,23 @@ int main() {
     link_stack.push('a');
     link_stack.pop();
     if(link_stack.empty()) std::cout << "empty!" << std::endl;
-    //std::cout << link_stack.read() << std::endl;
+    std::cout << link_stack.read() << std::endl;
+    link_stack.push('a');
+    link_stack.push('b');
+    link_stack.push('c');
+    link_stack.push('d');
+    std::cout << link_stack.read() << std::endl;
+    link_stack.pop();
+    std::cout << link_stack.read() << std::endl;
 
+    LinkedStack< LinkedStack<char> > stack_of_stacks;
+    /*
+    stack_of_stacks.push(link_stack);
+    link_stack.push('d');
+    stack_of_stacks.push(link_stack);
+    LinkedStack<char> t = stack_of_stacks.headNode();
+    std::cout << t.read();
+    */
     return 0;
+
 }
