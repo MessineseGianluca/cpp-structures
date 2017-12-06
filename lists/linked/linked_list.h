@@ -20,7 +20,7 @@ private:
 	Node<T> *prev_node_;
 	Node<T> *next_node_;
 	Node<T> *list_; // points to the list(sentinel) of his own in order to avoid
-	                // conflict
+	                // conflicts
     //T *node_;
 public:
     /*

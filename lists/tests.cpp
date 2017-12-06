@@ -78,6 +78,6 @@ int main() {
     ll.insert(l2, ll.begin());
     //std::cout << &ll;
     */
-    
+
     return 0;
 }

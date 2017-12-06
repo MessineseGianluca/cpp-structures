@@ -1,5 +1,6 @@
 #include <iostream>
 #include "array/array_stack.h"
+#include "linked/linked_stack.h"
 
 int main() {
     Stack<int> my_stack(5);
@@ -32,6 +33,13 @@ int main() {
     Stack<char> my_stack2("ciao", 4);
     std::cout << my_stack2.readStack() << std::endl;
 
+
+    /**************************** LinkedStack ********************************/
+    LinkedStack<char> link_stack;
+    link_stack.push('a');
+    link_stack.pop();
+    if(link_stack.empty()) std::cout << "empty!" << std::endl;
+    //std::cout << link_stack.read() << std::endl;
 
     return 0;
 }
