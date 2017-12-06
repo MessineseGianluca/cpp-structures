@@ -1,5 +1,5 @@
-#ifndef LINEAR_STACK_H
-#define LINEAR_STACK_H
+#ifndef LINKED_STACK_H
+#define LINKED_STACK_H
 
 template< class T > class LinkedStack;
 
@@ -75,4 +75,4 @@ template < class T > void LinkedStack< T >::pop() {
     length_--;
 }
 
-#endif //LINEAR_STACK_H
+#endif //LINKED_STACK_H
