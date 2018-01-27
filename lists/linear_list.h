@@ -19,10 +19,10 @@ public:
 	virtual position previous(position) const = 0; // return the previous position
 	virtual void insert(const value_type &, position) = 0; // insert an element
 	virtual void erase(position pos) = 0; // erases the element at position pos
-    virtual int size() const = 0; //implementation here is not efficient(see derivated classes)
+  virtual int size() const = 0; //implementation here is not efficient(see derivated classes)
 	/***************************** SERVICE METHODS **************************************/
 
-    void invert();
+  void invert();
 	bool is_palindrome() const;
 };
 
@@ -94,4 +94,6 @@ std::ostream & operator << (std::ostream &os, const LinearList<T,P> &l) {
 	os << "]";
 	return os;
 }
+
+
 #endif /* LINEAR_LIST_H_ */

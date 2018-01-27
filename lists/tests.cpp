@@ -13,7 +13,7 @@ int main() {
 
     my_array_list.insert(10, 11);
     my_array_list.insert(3, 5);
-	my_array_list.erase(5);
+	  my_array_list.erase(5);
     std::cout << std::endl << "My updated list: " << my_array_list <<std::endl;
 
     my_array_list.invert();
@@ -68,6 +68,19 @@ int main() {
     my_link_list4.insert('b', my_link_list4.begin());
     my_link_list4.erase(my_link_list3.begin()); //invalid pos exception
     std::cout << "my new list is: " << my_link_list4 << std::endl;
+
+    LinkedList<char> my_link_list5;
+    my_link_list5.insert('s', my_link_list5.begin());
+    my_link_list5.insert('g', my_link_list5.begin());
+    my_link_list5.insert('m', my_link_list5.begin());
+    my_link_list5.insert('l', my_link_list5.begin());
+    my_link_list5.insert('t', my_link_list5.begin());
+    my_link_list5.insert('a', my_link_list5.begin());
+    my_link_list5.insert('r', my_link_list5.begin());
+    my_link_list5.insert('i', my_link_list5.begin());
+    std::cout << "my new list is: " << my_link_list5 << std::endl;
+    my_link_list5.natural_merge_sort();
+    std::cout << "my ordered list is: " << my_link_list5 << std::endl;
 
     //Lists of Lists(coming soon)
     /*
