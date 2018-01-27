@@ -198,6 +198,9 @@ void LinkedList< T >::insert(const value_type &v, position p) {
         new_node->prev_node_ = p->prev_node_;
         p->prev_node_->next_node_ = new_node;
         p->prev_node_ = new_node;
+        if(this->length_ == 0) {
+          this->head_->prev_node_ = new_node;
+        }
         this->length_++;
     } catch(std::exception &e) {
         std::cout << e.what() << std::endl;
