@@ -12,30 +12,58 @@ public:
     virtual bool empty() const =  0;
     virtual node root() const = 0;
     virtual node parent(node) const =  0;
-    virtual node sx(node) const = 0;
-    virtual node dx(node) const = 0;
-    virtual bool sx_empty(node) const = 0;
-    virtual bool dx_empty(node) const = 0;
+    virtual node left(node) const = 0;
+    virtual node right(node) const = 0;
+    virtual bool left_empty(node) const = 0;
+    virtual bool right_empty(node) const = 0;
 
-    //virtual void costr(BinaryTree<T, N>);
+    //virtual void constr(BinaryTree<T, N>);
     virtual void erase(node) = 0;
 
     virtual T read(node) const = 0;
     virtual void write(node, value_type) = 0;
 
-    virtual void ins_root(node) = 0;
-    virtual void ins_sx(node) = 0;
-    virtual void ins_dx(node) = 0;
+    virtual void ins_root() = 0;
+    virtual void ins_left(node) = 0;
+    virtual void ins_right(node) = 0;
 
-    //virtual void previsit(node);
-    //virtual void invisita(node);
-    //virtual void postvisit(node);
-
+    void previsit(node);
+    void simmetric_visit(node);
+    void postvisit(node);
     void print() const;
-
 private:
     void print_sub_tree(const node) const;
 };
+
+template <class T, class N>
+void BinaryTree<T, N>::previsit(node n) {
+    std::cout << read(n) << " ";
+    if(!left_empty(n))
+        previsit(left(n));
+    if(!right_empty(n))
+        previsit(right(n));
+}
+
+template <class T, class N>
+void BinaryTree<T, N>::simmetric_visit(node n) {
+    if(!left_empty(n))
+        simmetric_visit(left(n));
+    std::cout << read(n) << " ";
+    if(!right_empty(n))
+        simmetric_visit(right(n));
+}
+
+template <class T, class N>
+void BinaryTree<T, N>::postvisit(node n) {
+    if(!left_empty(n))
+        postvisit(left(n));
+    if(!right_empty(n))
+        postvisit(right(n));
+    std::cout << read(n) << " ";
+
+}
+
+
 
 template <class T, class N>
 void BinaryTree<T, N>::print() const{
@@ -49,12 +77,12 @@ void BinaryTree<T, N>::print() const{
 template <class T, class N>
 void BinaryTree<T, N>::print_sub_tree(const node n) const {
     std::cout << "[" << read(n) << ", ";
-    if (!sx_empty(n))
-    	  print_sub_tree(sx(n));
+    if (!left_empty(n))
+    	  print_sub_tree(left(n));
     else std::cout << "NIL";
     std::cout << ", ";
-    if (!dx_empty(n))
-    	print_sub_tree(dx(n));
+    if (!right_empty(n))
+    	print_sub_tree(right(n));
     else std::cout << "NIL";
     std::cout << " ]";
 }
