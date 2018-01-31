@@ -141,8 +141,8 @@ void ArrayList< T >::insert(const value_type &a, position p) {
         change_dimension_(elements_, array_dimension_, array_dimension_ * 2);
         array_dimension_ = array_dimension_ * 2;
     }
-    if ( (0 < p) && (p <= length_ + 1)) { // precondiction
-    	for (int i = length_; i >= p; i--) {
+    if ((0 < p) && (p <= length_ + 1)) { // precondiction
+    	for(int i = length_; i >= p; i--) {
 			  elements_[i] = elements_[i - 1];
       }
 		  elements_[p - 1] = a;
