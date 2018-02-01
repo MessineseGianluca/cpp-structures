@@ -45,4 +45,11 @@ int main() {
   		  std::cout <<  G.read_label(*(L.read(p))) << " ";
   		  p = L.next(p);
   	}
+
+    GNode n7;
+    if(G.exists_node(n7)) {
+        std::cout << "The node exists";
+    } else {
+      std::cout << "The node doesn't exists";
+    }
 }

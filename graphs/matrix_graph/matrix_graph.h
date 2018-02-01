@@ -1,6 +1,6 @@
 #ifndef MATRIX_GRAPH_H
 #define MATRIX_GRAPH_H
-
+#include "exceptions.h"
 #include "../graph.h"
 
 template<class W> class EdgeInfo {
@@ -19,7 +19,7 @@ public:
   	void *info; // points to a generic type
   	EdgeInfo<W> *edges; // array of edges
 
-  	NodeInfo(){
+  	NodeInfo() {
   		  info = 0;
   		  empty = true;
   	}
@@ -34,12 +34,23 @@ class GNode {
 public:
   	GNode(int i) {
   		  id_node = i;
+        used = true;
   	}
-  	GNode() {}
-  	int getId() { return id_node; }
-  	void setId(int id) { id_node = id; }
+  	GNode() { used = false; }
+  	int getId() {
+        if(used) return id_node;
+        else {
+            throw InvalidNode();
+        }
+    }
+  	void setId(int id) {
+        id_node = id;
+        used = true;
+    }
+    bool getUsed() { return used; }
 private:
     int id_node;
+    bool used;
 };
 
 
@@ -55,14 +66,13 @@ public:
 
     MatrixGraph(int);
     ~MatrixGraph();
-
     bool empty() const;
     void ins_node(GNode &);
     void ins_edge(node, node, weight);
     void delete_node(node);
     void delete_edge(node, node);
-		// bool exists_node(node);
-		// bool esiste_edge(Edge);
+		bool exists_node(node) const;
+		bool exists_edge(node, node) const;
     list_of_nodes adjacent(node) const;
     list_of_nodes list_nodes() const;
     label read_label(node) const;
@@ -72,7 +82,7 @@ public:
 		int num_of_nodes() {
 			  return nodes;
 		};
-		int num_of_edges(){
+		int num_of_edges() {
 			  return edges;
 		};
 
@@ -156,9 +166,23 @@ void MatrixGraph<L, W>::delete_node(node n) {
 }
 
 template<class L, class W>
-void MatrixGraph<L, W>::delete_edge(node n1, node n2){
+void MatrixGraph<L, W>::delete_edge(node n1, node n2) {
 	  matrix[n1.getId()].edges[n2.getId()].empty = true;
 	  edges--;
+}
+
+template<class L, class W>
+bool MatrixGraph<L, W>::exists_node(node n) const {
+    if(n.getUsed()) return(!matrix[n.getId()].empty);
+    else return false;
+}
+
+template<class L, class W>
+bool MatrixGraph<L, W>::exists_edge(node n1, node n2) const {
+    if(exists_node(n1) && exists_node(n2)) {
+        return(!matrix[n1.getId()].edges[n2.getId()].empty);
+    }
+    else return false;
 }
 
 template<class L, class W>
