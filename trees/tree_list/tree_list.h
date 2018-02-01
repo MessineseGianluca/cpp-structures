@@ -129,9 +129,10 @@ bool TreeList<I>::last_sibling(node n) const {
   	position_list c;
   	node p = parent(n);
   	c = nodes[p].childs.begin();
-  	while (!nodes[p].childs.end(c))
+  	while(!nodes[p].childs.end(c)) {
   		  c = nodes[p].childs.next(c);
-    // c is the last child of p
+    }
+    c = nodes[p].childs.previous(c);
   	return (n == nodes[p].childs.read(c));
 }
 

@@ -110,10 +110,9 @@ typename ArrayList< T >::position ArrayList< T >::next(position p) const {
 
 template< class T >
 typename ArrayList< T >::position ArrayList< T >::previous(position p) const {
-	if ( (1 < p) && (p < length_ + 1)) // precondiction
+	if ( (1 < p) && (p <= length_ + 1)) // precondiction
 		return(p - 1);
-	else
-		return p;
+	else return p;
 }
 
 template< class T > bool ArrayList< T >::end(position p) const {
