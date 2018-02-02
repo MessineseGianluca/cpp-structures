@@ -1,8 +1,8 @@
-#include "matrix_graph/matrix_graph.h"
+#include "list_graph/list_graph.h"
 #include <string>
 
 int main() {
-  	MatrixGraph<std::string, double> G(10);
+  	ListGraph<std::string, double> G(10);
   	GNode n1, n2, n3, n4, n5, n6;
 
   	G.ins_node(n1);
@@ -36,8 +36,8 @@ int main() {
   	G.delete_node(n6);
   	std::cout << "\nNum of nedes: " << G.num_of_nodes() << std::endl;
 
-  	MatrixGraph<std::string, double>::list_of_nodes L = G.adjacent(n1);
-  	MatrixGraph<std::string, double>::list_of_nodes_pos p;
+  	ListGraph<std::string, double>::list_of_nodes L = G.adjacent(n1);
+  	ListGraph<std::string, double>::list_of_nodes_pos p;
 
   	std::cout << "Adjacent of:  " << G.read_label(n1) << "--> ";
   	p = L.begin();
@@ -45,11 +45,17 @@ int main() {
   		  std::cout <<  G.read_label(*(L.read(p))) << " ";
   		  p = L.next(p);
   	}
+    std::cout << std::endl;
 
     GNode n7;
     if(G.exists_node(n7)) {
-        std::cout << "The node exists";
+        std::cout << "The node exists\n";
     } else {
-      std::cout << "The node doesn't exists";
+        std::cout << "The node doesn't exists\n";
+    }
+    if(G.exists_edge(n1, n7)) {
+        std::cout << "The edge exists\n";
+    } else {
+        std::cout << "The edge doesn't exists\n";
     }
 }

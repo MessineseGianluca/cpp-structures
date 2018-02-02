@@ -1,6 +1,5 @@
 #ifndef MATRIX_GRAPH_H
 #define MATRIX_GRAPH_H
-#include "exceptions.h"
 #include "../graph.h"
 
 template<class W> class EdgeInfo {
@@ -28,31 +27,6 @@ public:
   		  if (!empty) delete [] edges;
     }
 };
-
-/* Graph node */
-class GNode {
-public:
-  	GNode(int i) {
-  		  id_node = i;
-        used = true;
-  	}
-  	GNode() { used = false; }
-  	int getId() {
-        if(used) return id_node;
-        else {
-            throw InvalidNode();
-        }
-    }
-  	void setId(int id) {
-        id_node = id;
-        used = true;
-    }
-    bool getUsed() { return used; }
-private:
-    int id_node;
-    bool used;
-};
-
 
 template<class L, class W> class MatrixGraph : public Graph<L, W, GNode> {
 public:
@@ -198,7 +172,7 @@ typename MatrixGraph<L, W>::list_of_nodes MatrixGraph<L, W>::adjacent(node n) co
 
 template<class L, class W>
 typename MatrixGraph<L, W>::list_of_nodes MatrixGraph<L, W>::list_nodes() const {
-  	list_of_nodes list(nodes - 1);
+  	list_of_nodes list(nodes);
   	for (int i = 0; i < dimension; i++) {
     		if (!matrix[i].empty) {
     			  list.insert(new GNode(i), list.begin());
