@@ -29,16 +29,20 @@ public:
   	node first_child(node) const;
   	bool last_sibling(node) const;
   	node next_sibling(node) const;
-  	// To implement
-  	//  void insFirstSubTree(node, TreeList &);
-  	//	void insSubTree(node, TreeList &);
+  	void ins_first_sub_tree(node &, TreeList &);
+  	//void ins_sub_tree(node, TreeList &);
   	void remove_sub_tree(node);
   	void ins_first(node, item);
+    void ins_last(node, item);
   	void ins(node, item);
   	void write_node(node, item);
   	item read_node(node) const;
   	void print() const;
+    int get_num_of_nodes() const {
+        return num_of_nodes;
+    }
  private:
+    void preorder_ins(node, node , TreeList &);
   	Record nodes[MAX_NODES]; // array of parent nodess
   	node root_; // cursor to root element
     int num_of_nodes;
@@ -51,12 +55,12 @@ void TreeList<I>::print() const {
   	for(int i = 0; i < MAX_NODES; i++){
     		if(nodes[i].used == true) {
       			std::cout << "\n  " << read_node(i) << ":  ";
-            if(!leaf(i)) {
-    				    position_list child = nodes[i].childs.begin();
-    				    while(!nodes[i].childs.end(child)) {
-  					        std::cout << read_node(nodes[i].childs.read(child)) << " ";
-            		    child = nodes[i].childs.next(child);
-          	    }
+                if(!leaf(i)) {
+			        position_list child = nodes[i].childs.begin();
+			        while(!nodes[i].childs.end(child)) {
+				        std::cout << read_node(nodes[i].childs.read(child)) << " ";
+    		            child = nodes[i].childs.next(child);
+  	                }
       			}
     		}
   	}
@@ -95,7 +99,7 @@ template <class I>
 typename TreeList<I>::node TreeList<I>::parent(node n) const {
   	position_list child;
   	int p;
-	  bool found = false;
+	bool found = false;
   	for(int i = 0; i < MAX_NODES; i++) {
     		if(!nodes[i].childs.empty()) {
     			  child = nodes[i].childs.begin();
@@ -151,6 +155,43 @@ typename TreeList<I>::node TreeList<I>::next_sibling(node n) const {
     /* else throw exception */
 }
 
+template <class I>
+void TreeList<I>::ins_first_sub_tree(node &n, TreeList &B) {
+    if(num_of_nodes + B.get_num_of_nodes() <= MAX_NODES) {
+        B.preorder_ins(B.root(), n, *this);
+    }
+}
+
+
+template <class I>
+void TreeList<I>::preorder_ins(node n, node in_node, TreeList &InTree) {
+    node c;
+    item node_value = read_node(n);
+    if(n == root()) {
+        InTree.ins_first(in_node, node_value);
+        in_node = InTree.first_child(in_node);
+    } else {
+        InTree.ins_last(in_node, node_value);
+        if(n == first_child(parent(n)) && !last_sibling(n)) { //if it's the first child
+            // go down
+            in_node = InTree.first_child(in_node);
+        } else if(last_sibling(n)) {
+            // go up
+            in_node = InTree.parent(in_node);
+        }
+    }
+    if(!leaf(n)) {
+        c = first_child(n);
+        while(!last_sibling(c)) {
+            preorder_ins(c, in_node, InTree);
+            c = next_sibling(c);
+        }
+        preorder_ins(c, in_node, InTree);
+    }
+}
+
+
+
 
 // insert a node as first_child of n
 template <class I>
@@ -165,6 +206,20 @@ void TreeList<I>::ins_first(node n, item el){
   		  nodes[k].e = el;
   		  nodes[n].childs.insert(k, nodes[n].childs.begin());
   	}
+}
+
+template <class I>
+void TreeList<I>::ins_last(node n, item el) {
+    int k = -1;
+    // search for a free position in nodes[]
+    do {
+        k++;
+    } while(k < MAX_NODES && nodes[k].used == true);
+    if(k < MAX_NODES) {
+        nodes[k].used = true;
+        nodes[k].e = el;
+        nodes[n].childs.insert_last(k);
+    }
 }
 
 // insert a node as a sibling of n
