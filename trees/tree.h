@@ -1,5 +1,7 @@
 #ifndef TREE_H
 #define TREE_H
+#include "../queues/linked/linked_queue.h"
+
 template<class I, class N>
 class Tree {
 public:
@@ -18,10 +20,10 @@ public:
   	virtual void write_node(node, item) = 0;
   	virtual item read_node(node) const = 0;
     virtual int get_num_of_nodes() const = 0;
-  	// void BFS(node) const = 0;
+    virtual bool search(const item) const = 0;
+  	void BFS(node) const;
   	void preorder(node) const;
   	void postorder(node) const;
-    // node research(item) const = 0;
     int depth(node) const;
     // int width() const = 0;
 };
@@ -74,6 +76,25 @@ template<class I, class N> void Tree<I, N>::postorder(node n) const {
     std::cout << read_node(n) << " ";
 }
 
+
+template<class I, class N> void Tree<I, N>::BFS(node n) const {
+    node c;
+    LinkedQueue<node> q;
+    q.queue(n);
+    while(!q.empty()) {
+        c = q.read();
+        std::cout << read_node(c);
+        q.dequeue();
+        if(!leaf(c)) {
+            c = first_child(c);
+            while(!last_sibling(c)) {
+                q.queue(c);
+                c = next_sibling(c);
+            }
+            q.queue(c);
+        }
+    }
+}
 
 
 #endif /* TREE_H */

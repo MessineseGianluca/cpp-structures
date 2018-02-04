@@ -64,5 +64,7 @@ int main() {
     my_tree_list.ins_sub_tree(n, my_tree2);
     my_tree_list.print();
 
+    my_tree_list.BFS(my_tree_list.root());
+
     return 0;
 }
