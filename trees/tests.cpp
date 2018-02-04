@@ -65,6 +65,9 @@ int main() {
     my_tree_list.print();
 
     my_tree_list.BFS(my_tree_list.root());
+    std::cout << std::endl;
+    int d = my_tree_list.width(my_tree_list.root());
+    std::cout << "The max width of the tree is: " << d << std::endl;
 
     return 0;
 }

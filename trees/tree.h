@@ -25,7 +25,9 @@ public:
   	void preorder(node) const;
   	void postorder(node) const;
     int depth(node) const;
-    // int width() const = 0;
+    int width(node) const;
+private:
+    void previsit_width(node, int &, int *) const;
 };
 
 template<class I, class N> int Tree<I, N>::depth(node n) const {
@@ -35,11 +37,8 @@ template<class I, class N> int Tree<I, N>::depth(node n) const {
     else {
         v = first_child(n);
         max = depth(v);
-        std::cout << last_sibling(v) << std::endl;
         while(!last_sibling(v)) {
             v = next_sibling(v);
-            std::cout << read_node(v);
-            std::cout << last_sibling(v);
             c = depth(v);
             if(max < c) {
                 max = c;
@@ -93,6 +92,43 @@ template<class I, class N> void Tree<I, N>::BFS(node n) const {
             }
             q.queue(c);
         }
+    }
+}
+
+template <class I, class N> int Tree<I, N>::width(node n) const {
+    int d = depth(n) + 1;
+    int levels[d]; // array wich contains the num of nodes for each level
+    int max;
+    int current = 0;
+    int i;
+    // init each element to 0
+    for(i = 0; i < d; i++) {
+        levels[i] = 0;
+    }
+    previsit_width(n, current, levels);
+    max = levels[0];
+    // search the max
+    for(i = 1; i < d; i++) {
+      if(levels[i] > max) {
+          max = levels[i];
+      }
+    }
+    return max;
+}
+
+template <class I, class N>
+void Tree<I, N>::previsit_width(node n, int &current, int *levels) const {
+    node c;
+    levels[current]++;
+    if(!leaf(n)) {
+        current++;
+        c = first_child(n);
+        while(!last_sibling(c)) {
+            previsit_width(c, current, levels);
+            c = next_sibling(c);
+        }
+        previsit_width(c, current, levels);
+        current--;
     }
 }
 
