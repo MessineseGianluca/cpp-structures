@@ -30,7 +30,7 @@ public:
   	bool last_sibling(node) const;
   	node next_sibling(node) const;
   	void ins_first_sub_tree(node &, TreeList &);
-  	//void ins_sub_tree(node, TreeList &);
+  	void ins_sub_tree(node &, TreeList &);
   	void remove_sub_tree(node);
   	void ins_first(node, item);
     void ins_last(node, item);
@@ -42,6 +42,7 @@ public:
         return num_of_nodes;
     }
  private:
+    void preorder_ins_first(node, node , TreeList &);
     void preorder_ins(node, node , TreeList &);
   	Record nodes[MAX_NODES]; // array of parent nodess
   	node root_; // cursor to root element
@@ -158,18 +159,51 @@ typename TreeList<I>::node TreeList<I>::next_sibling(node n) const {
 template <class I>
 void TreeList<I>::ins_first_sub_tree(node &n, TreeList &B) {
     if(num_of_nodes + B.get_num_of_nodes() <= MAX_NODES) {
-        B.preorder_ins(B.root(), n, *this);
+        B.preorder_ins_first(B.root(), n, *this);
     }
 }
 
+
+template <class I>
+void TreeList<I>::preorder_ins_first(node n, node in_node, TreeList &InTree) {
+    node c;
+    item node_value = read_node(n);
+    if(n == root()) {
+        InTree.ins_first(in_node, node_value);
+        in_node = InTree.first_child(in_node);
+    } else {
+        InTree.ins_last(in_node, node_value);
+        if(n == first_child(parent(n)) && !last_sibling(n)) { //if it's the first child
+            // go down
+            in_node = InTree.first_child(in_node);
+        } else if(last_sibling(n)) {
+            // go up
+            in_node = InTree.parent(in_node);
+        }
+    }
+    if(!leaf(n)) {
+        c = first_child(n);
+        while(!last_sibling(c)) {
+            preorder_ins_first(c, in_node, InTree);
+            c = next_sibling(c);
+        }
+        preorder_ins_first(c, in_node, InTree);
+    }
+}
+template <class I>
+void TreeList<I>::ins_sub_tree(node &n, TreeList &B) {
+    if(num_of_nodes + B.get_num_of_nodes() <= MAX_NODES) {
+        B.preorder_ins(B.root(), n, *this);
+    }
+}
 
 template <class I>
 void TreeList<I>::preorder_ins(node n, node in_node, TreeList &InTree) {
     node c;
     item node_value = read_node(n);
     if(n == root()) {
-        InTree.ins_first(in_node, node_value);
-        in_node = InTree.first_child(in_node);
+        InTree.ins(in_node, node_value);
+        in_node = InTree.next_sibling(in_node);
     } else {
         InTree.ins_last(in_node, node_value);
         if(n == first_child(parent(n)) && !last_sibling(n)) { //if it's the first child
@@ -189,7 +223,6 @@ void TreeList<I>::preorder_ins(node n, node in_node, TreeList &InTree) {
         preorder_ins(c, in_node, InTree);
     }
 }
-
 
 
 
@@ -238,14 +271,14 @@ void TreeList<I>::ins(node n, item el) {
     		p = parent(n);
     	  child = nodes[p].childs.begin();
     		bool found = false;
-        /* find the position of n in nodes[p] (parent of n)*/
+           /* find the position of n in nodes[p] (parent of n)*/
     		while (!nodes[p].childs.end(child) && !found) {
       			if (nodes[p].childs.read(child) == n) {
       					found = true;
             }
       			child = nodes[p].childs.next(child);
     		}
-        /* insert the new node position into nodes[p] (next to n position) */
+            /* insert the new node position into nodes[p] (next to n position) */
     		nodes[p].childs.insert(k, child);
   	}
 }

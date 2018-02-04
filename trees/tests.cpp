@@ -59,5 +59,10 @@ int main() {
     my_tree_list.ins_first_sub_tree(n, my_tree2);
     my_tree_list.print();
 
+    n = my_tree_list.first_child(my_tree_list.root());
+    n = my_tree_list.next_sibling(n);
+    my_tree_list.ins_sub_tree(n, my_tree2);
+    my_tree_list.print();
+
     return 0;
 }

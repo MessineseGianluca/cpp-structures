@@ -14,8 +14,6 @@ public:
   	virtual node first_child(node) const = 0;
   	virtual bool last_sibling(node) const = 0;
   	virtual node next_sibling(node) const = 0;
-  	//virtual void ins_first_sub_tree(node, Tree &) = 0;
-    //virtual void ins_sub_tree(node, Tree &) = 0;
   	virtual void remove_sub_tree(node) = 0;
   	virtual void write_node(node, item) = 0;
   	virtual item read_node(node) const = 0;
