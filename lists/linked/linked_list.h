@@ -41,9 +41,9 @@ public:
 	LinkedList();
 	// copy constructor
 	LinkedList(const LinkedList<T> &);
-  // array constructor
-  LinkedList(const value_type [], int);
-  // destructor
+    // array constructor
+    LinkedList(const value_type [], int);
+    // destructor
 	~LinkedList();
 
 	// operators
@@ -55,18 +55,18 @@ public:
 	position next(position) const;
 	position previous(position) const;
 	value_type read(position) const;
-  value_type* readA(position) const;
+    value_type* readA(position) const;
 	void write(const value_type &, position);
 	void insert(const value_type &, position);
-  void insert_last(const value_type &);
+    void insert_last(const value_type &);
 	void erase(position);
 	int size() const {
 		return length_;
 	};
-  void natural_merge_sort();
+    void natural_merge_sort();
 	// operator's overloading
 	LinkedList<T> &operator = (const LinkedList<T> &); // the assignment operator
-  bool operator == (const LinkedList<T> &) const; // tests two list for equality
+    bool operator == (const LinkedList<T> &) const; // tests two list for equality
 private:
   void distribute(LinkedList< T > &, LinkedList< T > &);
   void copy_chain(position &, LinkedList< T > &, LinkedList< T > &);

@@ -49,7 +49,10 @@ template<class L, class W, class N> void Graph<L, W, N>::controller_DFS(node n) 
     int graph_d = dim();
     bool marks[graph_d];
     for(int i = 0; i < graph_d; i++) marks[i] = false;
+    std::cout << std::endl;
     DFS(n, marks);
+    std::cout << std::endl;
+    
 }
 
 template<class L, class W, class N> void Graph<L, W, N>::DFS(node n, bool *marks) const {

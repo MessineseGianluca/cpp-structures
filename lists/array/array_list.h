@@ -26,13 +26,14 @@ public:
 	value_type read(position) const;
 	void write(const value_type &, position);
 	position begin() const;
-  int size() const {
-      return length_;
-  }
+    int size() const {
+        return length_;
+    }
 	bool end(position) const;
 	position next(position) const;
 	position previous(position) const;
 	void insert(const value_type &, position);
+    void insert_last(const value_type &);
 	void erase(position);
 
 	// operator's overloading
@@ -136,18 +137,30 @@ void ArrayList< T >::write(const value_type &a, position p) {
 
 template< class T >
 void ArrayList< T >::insert(const value_type &a, position p) {
+  if (length_ == array_dimension_) {
+    change_dimension_(elements_, array_dimension_, array_dimension_ * 2);
+    array_dimension_ = array_dimension_ * 2;
+  }
+  if ((0 < p) && (p <= length_ + 1)) { // precondiction
+    for(int i = length_; i >= p; i--) {
+      elements_[i] = elements_[i - 1];
+    }
+	elements_[p - 1] = a;
+	length_++;
+  }
+}
+
+template< class T >
+void ArrayList< T >::insert_last(const value_type &a) {
     if (length_ == array_dimension_) {
         change_dimension_(elements_, array_dimension_, array_dimension_ * 2);
         array_dimension_ = array_dimension_ * 2;
     }
-    if ((0 < p) && (p <= length_ + 1)) { // precondiction
-    	for(int i = length_; i >= p; i--) {
-			  elements_[i] = elements_[i - 1];
-      }
-		  elements_[p - 1] = a;
-		  length_++;
-	  }
+    position pos = size();
+    elements_[pos] = a;
+    length_++;
 }
+
 
 template< class T > void ArrayList< T >::erase(position p) {
 	if ( (0 < p) && ( p < length_ + 1)) { // precondiction
@@ -160,8 +173,8 @@ template< class T > void ArrayList< T >::erase(position p) {
 	}
 }
 
-template< class T > void ArrayList< T >
-::change_dimension_(T*& a, int old_dimension_, int new_dimension_) {
+template< class T >
+void ArrayList< T >::change_dimension_(T*& a, int old_dimension_, int new_dimension_) {
 	T* temp = new T[new_dimension_];
 	int number;
 	if (old_dimension_ < new_dimension_)

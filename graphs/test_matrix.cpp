@@ -52,4 +52,6 @@ int main() {
     } else {
       std::cout << "The node doesn't exists";
     }
+
+    G.controller_DFS(n1);
 }

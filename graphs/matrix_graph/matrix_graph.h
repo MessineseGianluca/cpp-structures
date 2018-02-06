@@ -167,7 +167,7 @@ typename MatrixGraph<L, W>::list_of_nodes MatrixGraph<L, W>::adjacent(node n) co
   	list_of_nodes list(nodes - 1); // worst scenario nodes - 1 adjacencies
   	for(int i = 0; i < dimension; i++) {
         if (!matrix[n.getId()].edges[i].empty) {
-            list.insert(new GNode(i), list.begin());
+            list.insert_last(new GNode(i));
   		 }
   	}
   	return list;
