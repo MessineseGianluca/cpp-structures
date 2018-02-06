@@ -58,4 +58,6 @@ int main() {
     } else {
         std::cout << "The edge doesn't exists\n";
     }
+
+    G.controller_DFS(n1);
 }

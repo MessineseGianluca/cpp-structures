@@ -49,11 +49,14 @@ public:
     void write_label(node, label) ;
     weight read_weight(node, node) const ;
     void write_weight(node, node, weight) ;
-    int num_of_nodes() {
+    int num_of_nodes() const {
         return nodes;
     }
-    int num_of_edges() {
+    int num_of_edges() const {
         return edges;
+    }
+    int dim() const {
+        return dimension;
     }
 private:
     NodeInfo<L, W>* matrix;
@@ -155,10 +158,10 @@ void ListGraph<L, W>::delete_edge(node n1, node n2) {
       	p = matrix[n1.getId()].edges.begin();
       	bool found = false;
       	while(!matrix[n1.getId()].edges.end(p) && !found){
-      		  if (matrix[n1.getId()].edges.read(p)._to.getId() == n2.getId())
-      			    found = true;
-      		  else
-      				  p = matrix[n1.getId()].edges.next(p);
+            if (matrix[n1.getId()].edges.read(p)._to.getId() == n2.getId())
+                found = true;
+            else
+                p = matrix[n1.getId()].edges.next(p);
       	}
       	if (found) matrix[n1.getId()].edges.erase(p);
         edges--;
@@ -271,19 +274,21 @@ void ListGraph<L, W>::write_weight(node n1, node n2, W weight) {
       	bool found = false;
       	while(!matrix[n1.getId()].edges.end(p) && !found) {
             if(matrix[n1.getId()].edges.read(p)._to.getId() == n2.getId())
-        		    found = true;
-        		else
-        		    p = matrix[n1.getId()].edges.next(p);
+                found = true;
+        	else
+                p = matrix[n1.getId()].edges.next(p);
       	}
       	if(found) {
-        		EdgeInfo< W > I;
-        		I.weight = weight;
-        		I._to = n2;
-        		matrix[n1.getId()].edges.write(I, p);
+            EdgeInfo< W > I;
+            I.weight = weight;
+            I._to = n2;
+            matrix[n1.getId()].edges.write(I, p);
       	}
     } else {
         throw InvalidNode();
     }
 }
+
+
 
 #endif /* LIST_GRAPH_H */
