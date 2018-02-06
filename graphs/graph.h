@@ -1,6 +1,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 #include "../lists/array/array_list.h"
+#include "../queues/linked/linked_queue.h"
 #include "exceptions.h"
 #include "gnode.h"
 
@@ -40,9 +41,10 @@ public:
   	virtual int num_of_edges() const = 0;
     virtual int dim() const = 0;
     void controller_DFS(node) const; // call it for DFS
+    void BFS(node) const;
 private:
     void DFS(node, bool *) const;
-    // is_connected, BFS, Dijkstra
+    // is_connected, Dijkstra
 };
 
 template<class L, class W, class N> void Graph<L, W, N>::controller_DFS(node n) const {
@@ -52,7 +54,7 @@ template<class L, class W, class N> void Graph<L, W, N>::controller_DFS(node n) 
     std::cout << std::endl;
     DFS(n, marks);
     std::cout << std::endl;
-    
+
 }
 
 template<class L, class W, class N> void Graph<L, W, N>::DFS(node n, bool *marks) const {
@@ -68,6 +70,36 @@ template<class L, class W, class N> void Graph<L, W, N>::DFS(node n, bool *marks
         }
         p = ls.next(p);
     }
+}
+
+template<class L, class W, class N> void Graph<L, W, N>::BFS(node n) const {
+    LinkedQueue<node> q;
+    list_of_nodes list;
+    list_of_nodes_pos p;
+    int graph_d = dim();
+    bool marks[graph_d];
+    for(int i = 0; i < graph_d; i++){
+        marks[i] = false;
+    }
+    std::cout << std::endl;
+    q.queue(n);
+    while(!q.empty()) {
+        node c = q.read();
+        q.dequeue();
+        if(!marks[c.getId()])
+        std::cout << read_label(c) << " ";
+        marks[c.getId()] = true;
+        list = adjacent(c);
+        p = list.begin();
+        while(!list.end(p)) {
+            node v(list.read(p)->getId());
+            if(!marks[v.getId()]) {
+                q.queue(v);
+            }
+            p = list.next(p);
+        }
+    }
+    std::cout << std::endl;
 }
 
 #endif /* GRAPH_H */

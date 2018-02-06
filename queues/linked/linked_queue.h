@@ -3,12 +3,12 @@
 
 template< class T > class LinkedQueue;
 
-template< class T > class Node {
+template< class T > class QNode {
 	friend class LinkedQueue<T>;
 private:
 	T value_;
-	Node<T> *prev_node_;
-    Node<T> *next_node_;
+	QNode<T> *prev_node_;
+    QNode<T> *next_node_;
 };
 
 template < class T > class LinkedQueue {
@@ -25,13 +25,13 @@ public:
     void edit(const value_type &); // edit the first node in the queue
 private:
     int length_;
-    Node <T> *head_;
-    Node <T> *tail_;
+    QNode <T> *head_;
+    QNode <T> *tail_;
 };
 
 template < class T > LinkedQueue< T >::LinkedQueue() {
-    head_ = new Node<T>;
-    tail_ = new Node<T>;
+    head_ = new QNode<T>;
+    tail_ = new QNode<T>;
     head_->next_node_ = tail_;
     tail_->prev_node_ = head_;
     length_ = 0;
@@ -63,7 +63,7 @@ void LinkedQueue< T >::edit(const typename LinkedQueue< T >::value_type &val) {
 
 template < class T >
 void LinkedQueue< T >::queue(const typename LinkedQueue< T >::value_type &val) {
-    Node< T > *new_node = new Node< T >;
+    QNode< T > *new_node = new QNode< T >;
     new_node->value_ = val;
     new_node->prev_node_ = tail_->prev_node_;
     tail_->prev_node_->next_node_ = new_node;
@@ -77,7 +77,7 @@ void LinkedQueue< T >::queue(const typename LinkedQueue< T >::value_type &val) {
 
 template < class T > void LinkedQueue< T >::dequeue() {
     if(!empty()) {
-        Node<T> *temp_node = new Node< T >;
+        QNode<T> *temp_node = new QNode< T >;
         temp_node = head_->next_node_;
         head_->next_node_ = (head_->next_node_)->next_node_;
         delete temp_node;

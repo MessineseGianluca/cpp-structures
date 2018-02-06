@@ -60,4 +60,5 @@ int main() {
     }
 
     G.controller_DFS(n1);
+    G.BFS(n1);
 }
