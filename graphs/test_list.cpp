@@ -42,8 +42,8 @@ int main() {
   	std::cout << "Adjacent of:  " << G.read_label(n1) << "--> ";
   	p = L.begin();
   	while (!L.end(p)) {
-  		  std::cout <<  G.read_label(*(L.read(p))) << " ";
-  		  p = L.next(p);
+        std::cout <<  G.read_label(*(L.read(p))) << " ";
+        p = L.next(p);
   	}
     std::cout << std::endl;
 
@@ -61,4 +61,19 @@ int main() {
 
     G.controller_DFS(n1);
     G.BFS(n1);
+
+    G.ins_node(n7);
+  	G.write_label(n7, "g");
+    if(G.controller_is_connected(n1)) {
+        std::cout << "the graph is connected" << std::endl;
+    } else {
+        std::cout << "the graph is not connected" << std::endl;
+    }
+
+    G.ins_edge(n1, n7, 0.2);
+    if(G.controller_is_connected(n1)) {
+        std::cout << "the graph is connected" << std::endl;
+    } else {
+        std::cout << "the graph is not connected" << std::endl;
+    }
 }

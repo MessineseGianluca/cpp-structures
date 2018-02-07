@@ -42,19 +42,60 @@ public:
     virtual int dim() const = 0;
     void controller_DFS(node) const; // call it for DFS
     void BFS(node) const;
+    bool controller_is_connected(node n) const;
+
 private:
     void DFS(node, bool *) const;
-    // is_connected, Dijkstra
+    void is_connected(int &, bool *, node , int) const;
+
+    // is_connected, dij
 };
 
-template<class L, class W, class N> void Graph<L, W, N>::controller_DFS(node n) const {
+template<class L, class W, class N>
+bool Graph<L, W, N>::controller_is_connected(node n) const {
+    int count = 0;
     int graph_d = dim();
+    int num = num_of_nodes();
     bool marks[graph_d];
-    for(int i = 0; i < graph_d; i++) marks[i] = false;
-    std::cout << std::endl;
-    DFS(n, marks);
-    std::cout << std::endl;
+    for(int i = 0; i < graph_d; i++) {
+        marks[i] = false;
+    }
+    is_connected(count, marks, n, num);
+    if(count == num) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
+template<class L, class W, class N>
+void Graph<L, W, N>::is_connected(int &count, bool *marks, node n, int num) const {
+    if(!marks[n.getId()]) {
+        count++;
+        marks[n.getId()] = true;
+    }
+    list_of_nodes temp = adjacent(n);
+    list_of_nodes_pos p = temp.begin();
+    while(!temp.end(p) && count != num) {
+        node c(temp.read(p)->getId());
+        if(!marks[c.getId()]) {
+            is_connected(count, marks, c, num);
+        }
+        p = temp.next(p);
+    }
+}
+
+template<class L, class W, class N> void Graph<L, W, N>::controller_DFS(node n) const {
+    if(controller_is_connected(n)) {
+        int graph_d = dim();
+        bool marks[graph_d];
+        for(int i = 0; i < graph_d; i++) marks[i] = false;
+        std::cout << std::endl;
+        DFS(n, marks);
+        std::cout << std::endl;
+    } else {
+        throw GraphIsNotConnected();
+    }
 }
 
 template<class L, class W, class N> void Graph<L, W, N>::DFS(node n, bool *marks) const {
@@ -64,7 +105,7 @@ template<class L, class W, class N> void Graph<L, W, N>::DFS(node n, bool *marks
     list_of_nodes ls = adjacent(n);
     p = ls.begin();
     while(!ls.end(p)) {
-        GNode c(ls.read(p)->getId());
+        node c(ls.read(p)->getId());
         if(marks[c.getId()] == false) {
             DFS(c, marks);
         }
@@ -73,33 +114,37 @@ template<class L, class W, class N> void Graph<L, W, N>::DFS(node n, bool *marks
 }
 
 template<class L, class W, class N> void Graph<L, W, N>::BFS(node n) const {
-    LinkedQueue<node> q;
-    list_of_nodes list;
-    list_of_nodes_pos p;
-    int graph_d = dim();
-    bool marks[graph_d];
-    for(int i = 0; i < graph_d; i++){
-        marks[i] = false;
-    }
-    std::cout << std::endl;
-    q.queue(n);
-    while(!q.empty()) {
-        node c = q.read();
-        q.dequeue();
-        if(!marks[c.getId()])
-        std::cout << read_label(c) << " ";
-        marks[c.getId()] = true;
-        list = adjacent(c);
-        p = list.begin();
-        while(!list.end(p)) {
-            node v(list.read(p)->getId());
-            if(!marks[v.getId()]) {
-                q.queue(v);
-            }
-            p = list.next(p);
+    if(controller_is_connected(n)) {
+        LinkedQueue<node> q;
+        list_of_nodes list;
+        list_of_nodes_pos p;
+        int graph_d = dim();
+        bool marks[graph_d];
+        for(int i = 0; i < graph_d; i++){
+            marks[i] = false;
         }
+        std::cout << std::endl;
+        q.queue(n);
+        while(!q.empty()) {
+            node c = q.read();
+            q.dequeue();
+            if(!marks[c.getId()])
+            std::cout << read_label(c) << " ";
+            marks[c.getId()] = true;
+            list = adjacent(c);
+            p = list.begin();
+            while(!list.end(p)) {
+                node v(list.read(p)->getId());
+                if(!marks[v.getId()]) {
+                    q.queue(v);
+                }
+                p = list.next(p);
+            }
+        }
+        std::cout << std::endl;
+    } else {
+        throw GraphIsNotConnected();
     }
-    std::cout << std::endl;
 }
 
 #endif /* GRAPH_H */
