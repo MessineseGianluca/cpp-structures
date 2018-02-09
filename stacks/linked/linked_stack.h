@@ -3,11 +3,11 @@
 
 template< class T > class LinkedStack;
 
-template< class T > class Node {
+template< class T > class StackNode {
 	friend class LinkedStack<T>;
 private:
 	T value_;
-	Node<T> *prev_node_;
+	StackNode<T> *prev_node_;
 };
 
 template < class T > class LinkedStack {
@@ -22,14 +22,14 @@ public:
     void pop();
     value_type read() const; // read node on the top_
     void edit(const value_type &); // edit node on the top
-    //T headNode() { return this->head_->value_; }
+    //T headStackNode() { return this->head_->value_; }
 private:
     int length_;
-    Node < T > *head_;
+    StackNode < T > *head_;
 };
 
 template < class T > LinkedStack< T >::LinkedStack() {
-    head_ = new Node<T>;
+    head_ = new StackNode<T>;
     head_->prev_node_ = head_;
     //head_->list_ = head_;
     length_ = 0;
@@ -60,7 +60,7 @@ void LinkedStack< T >::edit(const typename LinkedStack< T >::value_type &val) {
 
 template < class T >
 void LinkedStack< T >::push(const typename LinkedStack< T >::value_type &val) {
-    Node< T > *new_node = new Node< T >;
+    StackNode< T > *new_node = new StackNode< T >;
     new_node->value_ = val;
     new_node->prev_node_ = head_->prev_node_;
     head_->prev_node_ = new_node;
@@ -68,7 +68,7 @@ void LinkedStack< T >::push(const typename LinkedStack< T >::value_type &val) {
 }
 
 template < class T > void LinkedStack< T >::pop() {
-    Node< T > *temp_node = new Node< T >;
+    StackNode< T > *temp_node = new StackNode< T >;
     temp_node = head_->prev_node_;
     head_->prev_node_ = head_->prev_node_->prev_node_;
     delete temp_node;

@@ -166,9 +166,9 @@ template<class L, class W>
 typename MatrixGraph<L, W>::list_of_nodes MatrixGraph<L, W>::adjacent(node n) const {
   	list_of_nodes list(nodes - 1); // worst scenario nodes - 1 adjacencies
   	for(int i = 0; i < dimension; i++) {
-        if (!matrix[n.getId()].edges[i].empty) {
+        if(!matrix[n.getId()].edges[i].empty) {
             list.insert_last(new GNode(i));
-  		 }
+  		}
   	}
   	return list;
 }

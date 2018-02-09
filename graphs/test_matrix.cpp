@@ -23,6 +23,7 @@ int main() {
   	G.ins_edge(n1, n5, 0.3);
   	G.ins_edge(n2, n4, 0.1);
   	G.ins_edge(n2, n6, 0.2);
+    G.ins_edge(n2, n1, 0.2);
   	G.ins_edge(n3, n4, 1.0);
   	G.ins_edge(n3, n6, 0.7);
   	G.ins_edge(n4, n1, 0.5);
@@ -65,12 +66,13 @@ int main() {
         std::cout << "the graph is not connected" << std::endl;
     }
 
-    G.ins_edge(n1, n7, 0.2);
+    G.ins_edge(n5, n7, 0.2);
     if(G.controller_is_connected(n1)) {
         std::cout << "the graph is connected" << std::endl;
     } else {
         std::cout << "the graph is not connected" << std::endl;
     }
 
+    G.controller_path_more_than(n1, 1);
 
 }

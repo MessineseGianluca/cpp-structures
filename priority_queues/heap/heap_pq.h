@@ -2,12 +2,12 @@
 #define _CODAP_H_
 #include "assert.h"
 
-template< class T > class Heap_Priority_Queue {
+template< class T > class HeapPriorityQueue {
 public:
     typedef T elem_type;
-    Heap_Priority_Queue();
-    Heap_Priority_Queue(int);
-    ~Heap_Priority_Queue();
+    HeapPriorityQueue();
+    HeapPriorityQueue(int);
+    ~HeapPriorityQueue();
 
     void create();
     void insert(elem_type);
@@ -23,44 +23,44 @@ private:
 };
 
 template< class T >
-Heap_Priority_Queue < T >::Heap_Priority_Queue ():dimension_(100) {
+HeapPriorityQueue < T >::HeapPriorityQueue ():dimension_(100) {
     heap = new elem_type[dimension_];
     create();
 };
 
 template< class T >
-Heap_Priority_Queue < T >::Heap_Priority_Queue (int maxN):dimension_(maxN) {
+HeapPriorityQueue < T >::HeapPriorityQueue (int maxN):dimension_(maxN) {
     heap = new elem_type[dimension_];
     create ();
 };
 
-template< class T > Heap_Priority_Queue< T >::~Heap_Priority_Queue() {
+template< class T > HeapPriorityQueue< T >::~HeapPriorityQueue() {
     delete[] heap;
 };
 
-template< class T > void Heap_Priority_Queue< T >::create() {
+template< class T > void HeapPriorityQueue< T >::create() {
     last = 0;
 };
 
-template< class T > void Heap_Priority_Queue < T >::insert(elem_type e) {
+template< class T > void HeapPriorityQueue < T >::insert(elem_type e) {
     assert(last < dimension_);
     heap[++last - 1] = e; //pre increment
     fixUp();
 };
 
-template< class T > typename Heap_Priority_Queue < T >::elem_type Heap_Priority_Queue < T >::min() {
+template< class T > typename HeapPriorityQueue < T >::elem_type HeapPriorityQueue < T >::min() {
     assert(last != 0); //empty queue
     return(heap[0]);
 };
 
-template< class T > void Heap_Priority_Queue < T >::delete_min() {
+template< class T > void HeapPriorityQueue < T >::delete_min() {
     assert (last != 0);
     heap[0] = heap[last - 1];
     last--;
     fixDown (1, last);
 };
 
-template< class T > void Heap_Priority_Queue < T >::fixUp() {
+template< class T > void HeapPriorityQueue < T >::fixUp() {
     int k = last;
     while (k > 1 && heap[k - 1] < heap[k / 2 - 1]) {
         elem_type tmp;
@@ -72,7 +72,7 @@ template< class T > void Heap_Priority_Queue < T >::fixUp() {
     }
 }
 
-template< class T > void Heap_Priority_Queue < T >::fixDown(int k, int N) {
+template< class T > void HeapPriorityQueue < T >::fixDown(int k, int N) {
     bool swap = true;
     while (k <= N / 2 && swap) {
         int j = 2 * k;

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "tree_list/tree_list.h"
+#include "../exercises/util_n_tree.h"
 int main() {
     TreeList<char> my_tree_list;
     TreeList<char> my_tree2;
@@ -64,6 +65,7 @@ int main() {
     my_tree_list.ins_sub_tree(n, my_tree2);
     my_tree_list.print();
 
+    std::cout << "BFS: " << std::endl;
     my_tree_list.BFS(my_tree_list.root());
     std::cout << std::endl;
     int d = my_tree_list.width(my_tree_list.root());

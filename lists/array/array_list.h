@@ -5,7 +5,7 @@
 
 template < class T > class ArrayList : public LinearList<T, int> {
 public:
-  typedef typename LinearList<T, int>::value_type value_type;
+    typedef typename LinearList<T, int>::value_type value_type;
 	typedef typename LinearList<T, int>::position position;
 
 	// constructor
@@ -35,6 +35,9 @@ public:
 	void insert(const value_type &, position);
     void insert_last(const value_type &);
 	void erase(position);
+    position last() {
+        return length_ - 1;
+    }
 
 	// operator's overloading
 	ArrayList<T> &operator = (const ArrayList<T>&); // the assignment operator
@@ -49,8 +52,8 @@ private:
 
 /******************************* CONSTRUCTORS *****************************/
 template < class T > ArrayList< T >::ArrayList() {
-	array_dimension_ = 10; // standard dimension of the list
-  this->create();
+    array_dimension_ = 10; // standard dimension of the list
+    this->create();
 }
 
 template< class T > ArrayList< T >::ArrayList(int dim) {

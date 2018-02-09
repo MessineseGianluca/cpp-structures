@@ -17,9 +17,11 @@ public:
     };
 
     // constructors and destructors
-    TreeList() { create(); }
-    // Implement destructor
-
+    TreeList() {
+        nodes = new Record[MAX_NODES];
+        create();
+    }
+    ~TreeList();
     void create();
     bool empty() const;
     void ins_root();
@@ -45,11 +47,15 @@ public:
  private:
     void preorder_ins_first(node, node , TreeList &);
     void preorder_ins(node, node , TreeList &);
-    Record nodes[MAX_NODES]; // array of parent nodess
+    Record *nodes; // array of parent nodes
     node root_; // cursor to root element
     int num_of_nodes;
 };
 
+template <class I>
+TreeList<I>::~TreeList() {
+    delete[] nodes;
+}
 
 template <class I>
 void TreeList<I>::print() const {
