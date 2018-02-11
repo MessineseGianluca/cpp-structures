@@ -9,7 +9,7 @@
 template<class K, class E>
 class Pair {
 public:
-    Pair(){}
+    Pair() {}
     Pair(Pair<K, E> &p) {
         key = p.key;
         value = p.value;

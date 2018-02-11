@@ -204,9 +204,11 @@ T CursorBinaryTree<T>::read(node n) const {
 
 template <class T>
 void CursorBinaryTree<T>::write(node n, value_type a) {
-    if (n != NIL)
+    if (n != NIL) {
         space[n].value = a;
-	  else throw NullNode();
+    } else {
+        throw NullNode();
+    }
 }
 
 #endif /* CURSOR_BINARY_TREE_H_ */

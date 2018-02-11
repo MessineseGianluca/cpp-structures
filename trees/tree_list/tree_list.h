@@ -237,7 +237,7 @@ void TreeList<I>::preorder_ins(node n, node in_node, TreeList &InTree) {
 template <class I>
 void TreeList<I>::ins_first(node n, item el){
     int k = -1;
-      // search for a free position in nodes[]
+    // search for a free position in nodes[]
     do {
         k++;
     } while(k < MAX_NODES && nodes[k].used == true);

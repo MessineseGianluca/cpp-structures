@@ -16,7 +16,6 @@ public:
     virtual node right(node) const = 0;
     virtual bool left_empty(node) const = 0;
     virtual bool right_empty(node) const = 0;
-
     //virtual void constr(BinaryTree<T, N>);
     virtual void erase(node) = 0;
 
@@ -31,9 +30,15 @@ public:
     void simmetric_visit(node);
     void postvisit(node);
     void print() const;
+    bool leaf(node) const;
 private:
     void print_sub_tree(const node) const;
 };
+
+template <class T, class N>
+bool BinaryTree<T, N>::leaf(node n) const {
+    return (left_empty(n) && right_empty(n));
+}
 
 template <class T, class N>
 void BinaryTree<T, N>::previsit(node n) {
@@ -60,10 +65,7 @@ void BinaryTree<T, N>::postvisit(node n) {
     if(!right_empty(n))
         postvisit(right(n));
     std::cout << read(n) << " ";
-
 }
-
-
 
 template <class T, class N>
 void BinaryTree<T, N>::print() const{

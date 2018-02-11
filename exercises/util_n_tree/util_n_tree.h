@@ -1,4 +1,4 @@
-#include "../trees/tree_list/tree_list.h"
+#include "../../trees/tree_list/tree_list.h"
 
 template<class I>
 class UtilNTree {
@@ -70,6 +70,7 @@ int UtilNTree<I>::n_level(const TreeList<I> &T, int k) const {
                         }
                         c = T.next_sibling(c);
                     }
+                    // last child node
                     if(level == k) {
                         nodes_counter++;
                     }
@@ -77,10 +78,10 @@ int UtilNTree<I>::n_level(const TreeList<I> &T, int k) const {
                     q.queue(c);
                     if(!T.last_sibling(temp)) {
                         level--;
-
                     }
                 }
                 nodes_in_the_level[level]--;
+                // level needs to be incremented when is reached the last node of a level
                 if(nodes_in_the_level[level] == 0) {
                     level++;
                     if(level == k) {
