@@ -1,3 +1,11 @@
+/*
+ * Author: Gianluca Messinese, Italy
+ * Description: This is teaching material for my university course. Feel free
+ * to use/copy/modify this code.
+ * Source: For more open source projects visit my github profile:
+ * https://github.com/MessineseGianluca
+ *
+ */
 #include "../../binary_trees/cursor/cursor_binary_tree.h"
 
 class ZeroOneBinaryTree {
@@ -10,7 +18,9 @@ public:
      */
     bool is_zero_one(const CursorBinaryTree<int> &B, node n) const;
     /* Returns the number of 0 nodes in the tree */
-    int zero_nodes(const CursorBinaryTree<int> &B) const;
+    int controller_zero_nodes(const CursorBinaryTree<int> &B, node n) const;
+private:
+    void zero_nodes(const CursorBinaryTree<int> &B, node, int &) const;
 
 };
 
@@ -50,7 +60,25 @@ bool ZeroOneBinaryTree::is_zero_one(const CursorBinaryTree<int> &B, node n) cons
     }
 }
 
+int ZeroOneBinaryTree::controller_zero_nodes(const CursorBinaryTree<int> &B, node n) const {
+    node r = B.root();
+    if(is_zero_one(B, r)) {
+        int counter = 0;
+        zero_nodes(B, r, counter);
+        return counter;
+    } else {
+        return 0;
+    }
+}
 
-int ZeroOneBinaryTree::zero_nodes(const CursorBinaryTree<int> &B) const {
-
+void ZeroOneBinaryTree::zero_nodes(const CursorBinaryTree<int> &B, node n, int &counter) const {
+    if(B.read(n) == 0) {
+        counter++;
+    }
+    if(!B.left_empty(n)) {
+        zero_nodes(B, B.left(n), counter);
+    }
+    if(!B.right_empty(n)) {
+        zero_nodes(B, B.right(n), counter);
+    }
 }

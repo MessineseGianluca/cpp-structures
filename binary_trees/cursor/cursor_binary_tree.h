@@ -1,3 +1,11 @@
+/*
+ * Author: Gianluca Messinese, Italy
+ * Description: This is teaching material for my university course. Feel free
+ * to use/copy/modify this code.
+ * Source: For more open source projects visit my github profile:
+ * https://github.com/MessineseGianluca
+ *
+ */
 #ifndef CURSOR_BINARY_TREE_H_
 #define CURSOR_BINARY_TREE_H_
 #include "../binary_tree.h"

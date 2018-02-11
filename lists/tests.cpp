@@ -1,3 +1,11 @@
+/*
+ * Author: Gianluca Messinese, Italy
+ * Description: This is teaching material for my university course. Feel free
+ * to use/copy/modify this code.
+ * Source: For more open source projects visit my github profile:
+ * https://github.com/MessineseGianluca
+ *
+ */
 #include <iostream>
 #include "array/array_list.h"
 #include "linked/linked_list.h"

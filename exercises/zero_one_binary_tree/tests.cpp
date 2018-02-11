@@ -18,7 +18,6 @@ int main() {
     B.ins_left(left);
     B.ins_right(left);
     B.write(B.left(left), 0);
-    B.print();
     B.write(B.right(left), 0);
     B.ins_left(right);
     B.ins_right(right);
@@ -34,6 +33,9 @@ int main() {
     B.ins_right(left);
     B.write(B.right(left), 1);
     std::cout << Z.is_zero_one(B, B.root()) << std::endl;
+
+    std::cout << "The number of nodes is: " << Z.controller_zero_nodes(B, B.root());
+    std::cout << std::endl;
 
     return 0;
 }

@@ -1,4 +1,11 @@
-/* A dictionary is a collection of pairs of the form (k,v), where k is a
+/*
+ * Author: Gianluca Messinese, Italy
+ * Description: This is teaching material for my university course. Feel free
+ * to use/copy/modify this code.
+ * Source: For more open source projects visit my github profile:
+ * https://github.com/MessineseGianluca
+ * 
+ * A dictionary is a collection of pairs of the form (k,v), where k is a
  * key and v is the value associated with the key k (equivalently, v is the
  * value whose key is k).
  */

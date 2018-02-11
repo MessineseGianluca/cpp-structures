@@ -1,3 +1,11 @@
+/*
+ * Author: Gianluca Messinese, Italy
+ * Description: This is teaching material for my university course. Feel free
+ * to use/copy/modify this code.
+ * Source: For more open source projects visit my github profile:
+ * https://github.com/MessineseGianluca
+ *
+ */
 #ifndef LIST_GRAPH_H
 #define LIST_GRAPH_H
 #include "../graph.h"

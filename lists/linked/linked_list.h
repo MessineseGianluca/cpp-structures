@@ -1,3 +1,11 @@
+/*
+ * Author: Gianluca Messinese, Italy
+ * Description: This is teaching material for my university course. Feel free
+ * to use/copy/modify this code.
+ * Source: For more open source projects visit my github profile:
+ * https://github.com/MessineseGianluca
+ *
+ */
 #ifndef LINKED_LINKED_LIST_H_
 #define LINKED_LINKED_LIST_H_
 
