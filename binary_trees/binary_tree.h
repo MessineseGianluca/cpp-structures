@@ -34,6 +34,7 @@ public:
     virtual void ins_left(node) = 0;
     virtual void ins_right(node) = 0;
 
+    int depth(node) const;
     void previsit(node);
     void simmetric_visit(node);
     void postvisit(node);
@@ -64,6 +65,29 @@ void BinaryTree<T, N>::simmetric_visit(node n) {
     std::cout << read(n) << " ";
     if(!right_empty(n))
         simmetric_visit(right(n));
+}
+
+template<class T, class N>
+int BinaryTree<T, N>::depth(node n) const {
+    node v;
+    int max, c, max_depth, max_left, max_right;
+    if(leaf(n)) max_depth = 0;
+    else {
+        // v = first_child(n);
+        if(!left_empty(n)) {
+            max_left = depth(left(n));
+        }
+        if(!left_empty(n)) {
+            max_right = depth(left(n));
+        }
+        if(max_left <= max_right) {
+            max = max_right;
+        } else {
+            max = max_left;
+        }
+        max_depth = max + 1;
+    }
+    return max_depth;
 }
 
 template <class T, class N>

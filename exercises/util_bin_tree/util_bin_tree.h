@@ -7,99 +7,73 @@
  *
  */
 
-#include "../../trees/tree_list/tree_list.h"
+#include "../../binary_trees/cursor/cursor_binary_tree.h"
 
 template<class I>
-class UtilNTree {
+class UtilBinTree {
 public:
-    typedef typename TreeList<I>::node node;
-    UtilNTree() {};
-    ~UtilNTree() {};
+    typedef typename CursorBinaryTree<I>::node node;
+    UtilBinTree() {};
+    ~UtilBinTree() {};
     /* returns the number of leaves in the tree*/
-    int n_leaf(const TreeList<I> &T) const;
-    /* return the number of nodes in the level k ofthe tree */
-    int n_level(const TreeList<I> &T, int k) const;
+    int n_leaf(const CursorBinaryTree<I> &T) const;
+    /* return the number of nodes in the level k of the tree */
+    int n_level(const CursorBinaryTree<I> &T, int k) const;
 private:
-    void count_leaves(node, const TreeList<I> &, int &) const;
+    void count_leaves(node, const CursorBinaryTree<I> &, int &) const;
+    void count_level(const CursorBinaryTree<I> &, node, int, int &, int &) const;
 };
 
 template<class I>
-int UtilNTree<I>::n_leaf(const TreeList<I> &T) const {
+int UtilBinTree<I>::n_leaf(const CursorBinaryTree<I> &T) const {
     int count = 0;
     count_leaves(T.root(), T, count);
     return count;
 }
 
 template<class I>
-void UtilNTree<I>::count_leaves(node n, const TreeList<I> &T, int &counter) const {
+void UtilBinTree<I>::count_leaves(node n, const CursorBinaryTree<I> &T, int &counter) const {
     node c;
     if(T.leaf(n)) {
         counter++;
     } else {
-        c = T.first_child(n);
-        while(!T.last_sibling(c)) {
+        if(!T.left_empty(n)) {
+            c = T.left(n);
             count_leaves(c, T, counter);
-            c = T.next_sibling(c);
         }
-        count_leaves(c, T, counter);
+        if(!T.right_empty(n)) {
+            c = T.right(n);
+            count_leaves(c, T, counter);
+        }
+
     }
 }
 
-template<class I>
-int UtilNTree<I>::n_level(const TreeList<I> &T, int k) const {
-    int level = 0;
-    node n = T.root();
-    node c, temp;
-    int d = T.depth(n);
-    int nodes_counter = 0;
-    bool level_reached = false;
-    int nodes_in_the_level[d + 1];
-    for(int i = 0; i < d + 1; i++) {
-        nodes_in_the_level[i] = 0;
-    }
-    nodes_in_the_level[0] = 1;
-    LinkedQueue<node> q;
-    if(k <= d && !T.empty()) {
-        if(k == 0) {
-            nodes_counter = 1;
-        } else {
-            q.queue(n);
-            while(!q.empty() && !level_reached) {
-                c = q.read();
-                temp = c;
-                q.dequeue();
-                if(!T.leaf(c)) {
-                    level++;
-                    c = T.first_child(c);
-                    while(!T.last_sibling(c)) {
-                        q.queue(c);
-                        nodes_in_the_level[level]++;
-                        if(level == k) {
-                            nodes_counter++;
-                        }
-                        c = T.next_sibling(c);
-                    }
-                    // last child node
-                    if(level == k) {
-                        nodes_counter++;
-                    }
-                    nodes_in_the_level[level]++;
-                    q.queue(c);
-                    if(!T.last_sibling(temp)) {
-                        level--;
-                    }
-                }
-                nodes_in_the_level[level]--;
-                // level needs to be incremented when is reached the last node of a level
-                if(nodes_in_the_level[level] == 0) {
-                    level++;
-                    if(level == k) {
-                        level_reached = true;
-                    }
-                }
 
-            }
-        }
+template<class I>
+int UtilBinTree<I>::n_level(const CursorBinaryTree<I> &T, int k) const {
+    int level = 0;
+    int counter = 0;
+    node r = T.root();
+    if(k <= T.depth(T.root())) {
+        count_level(T, r, k, level, counter);
     }
-    return nodes_counter;
+    return counter;
+}
+
+template<class I>
+void UtilBinTree<I>::count_level(const CursorBinaryTree<I> &T, node n, int k, int &level, int &counter) const {
+    if(level == k) {
+        counter++;
+    }
+    if(!T.left_empty(n)) {
+        level++;
+        count_level(T, T.left(n), k, level, counter);
+        level--;
+    }
+    if(!T.right_empty(n)) {
+        level++;
+        count_level(T, T.right(n), k, level, counter);
+        level--;
+    }
 }
